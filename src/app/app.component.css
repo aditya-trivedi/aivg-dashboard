@@ -5,10 +5,3 @@
 .main-side-nav {
     width: 300px;
 }
-
-.list-item-with-icon-heading-description{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}

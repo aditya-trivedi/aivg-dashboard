@@ -1,19 +1,50 @@
 <mat-sidenav-container class="main-page-container" >
+
   <mat-sidenav class="main-side-nav" mode="side" opened>
+
     <mat-list>
-      <mat-list-item>
-        <span matListItemTitle>Pepper</span>
-        <span matListItemLine>Produced by a plant</span>
+
+      <div mat-subheader>Account</div>
+      <mat-list-item *ngIf="!authService.userSubject.getValue()" routerLink="/login" routerLinkActive="active" class="mat-list-item-center-text-with-icon">
+        <mat-icon matListItemIcon>person</mat-icon>
+        <div matListItemTitle>Sign-In</div>
+        <div matListItemLine>To keep track of your videos</div>
       </mat-list-item>
-      <mat-list-item>
-        <span matListItemTitle>Salt</span>
-        <span matListItemLine>Extracted from sea water</span>
+      <mat-list-item *ngIf="authService.userSubject.getValue()" routerLink="/account" routerLinkActive="active" class="mat-list-item-center-text-with-icon">
+        <mat-icon matListItemIcon>person</mat-icon>
+        <div matListItemTitle><b>{{ authService.userSubject.getValue()?.email }}</b></div>
+        <div matListItemLine>Your account</div>
       </mat-list-item>
-      <mat-list-item>
-        <span matListItemTitle>Paprika</span>
-        <span matListItemLine>Produced by dried and ground red peppers</span>
+
+      <mat-divider></mat-divider>
+
+      <div mat-subheader>Tools</div>
+      <mat-list-item *ngFor="let item of sideNavToolsIconList" routerLink="{{ item.router_link }}" >
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+        <span>{{ item.text }}</span>
       </mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <div mat-subheader>Dashboard</div>
+      <mat-list-item >
+        <mat-icon matListItemIcon>folder</mat-icon>
+        <span>My Video</span>
+      </mat-list-item>
+      <mat-list-item >
+        <mat-icon matListItemIcon>folder</mat-icon>
+        <span>My Audio</span>
+      </mat-list-item>
+
     </mat-list>
+
   </mat-sidenav>
-  <mat-sidenav-content>Main content</mat-sidenav-content>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <span>Account</span>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
 </mat-sidenav-container>

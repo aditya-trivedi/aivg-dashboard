@@ -1,0 +1,192 @@
+<div class="article-to-video-page-container">
+    <mat-stepper class="article-to-video-stepper" linear  labelPosition="bottom"  #articleToVideoStepper selectedIndex="2">
+
+        <mat-step label="Add article text" [stepControl]="articleTextFormGroup" >
+
+            <form  [formGroup]="articleTextFormGroup">
+                <mat-form-field style="width: 100%; height: 50vh; padding-top: 1rem;">
+                    <mat-label>Article</mat-label>
+                    <textarea formControlName="articleText" style="resize: none;" matInput></textarea>
+                    <mat-error *ngIf="!articleTextFormGroup.valid">Text should be between 200 - 1000 characters long</mat-error>
+                </mat-form-field>
+                <button style="margin-top: 1rem;" mat-raised-button color="primary" matStepperNext>Next</button>
+            </form>
+
+        </mat-step>
+
+        <mat-step  label="Add Images" [completed]="imagePreviews.length > 0">
+
+            <div class="add-image-container">
+
+                <mat-tab-group style=" background-color:aliceblue; padding: 1rem; width: calc(100% - 2rem);">
+                    
+                    
+                    <mat-tab label="Upload Images">
+                        <br>
+                        <p style="color: red;" *ngIf="uploadedImagePreviews.length + selectedImages.length >= 10">Maximum 10 images allowed!!</p>
+                        <button onclick="document.getElementById('uploadImages').click()" mat-raised-button color="primary" extended>
+                            <mat-icon>upload</mat-icon>
+                            Upload Images
+                        </button>
+                        <input id="uploadImages" style="display: none;" type="file" accept="image/*" multiple (change)="selectImages($event)" multiple/>
+
+                        <div style=" width: calc(100% - 1rem); margin-top: 1rem; ">
+                            <div class="selected-image-container">
+                                <p *ngIf="uploadedImagePreviews.length === 0">No images selected or uploaded</p>
+                                <div
+                                    cdkDropList
+                                    #uploaded="cdkDropList"
+                                    [cdkDropListData]="uploadedImagePreviews"
+                                    [cdkDropListConnectedTo]="[final]"
+                                    (cdkDropListDropped)="drop($event)"
+                                    cdkDropListOrientation="horizontal"
+                                    style="display: flex; min-height: 100px;">
+                                    <div *ngFor="let image of uploadedImagePreviews" class="selected-image-wrapper" cdkDrag>
+                                        <img  class="uploaded-and-selected-image" src="{{image}}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </mat-tab>
+
+
+                    <mat-tab label="Generate Images - BETA"> 
+                        <br>
+                        <button style="margin-bottom: 1vh;" [disabled]="isImageGeneratedOnce" mat-raised-button color="primary" extended (click)="generateImagesRelatedToArticle()">
+                            <mat-icon>add_photo_alternate</mat-icon>
+                            Generate Images
+                        </button>
+                        <b><p style="color: red;" *ngIf="isImageGeneratedOnce">Beta Feature : Images can be generated only once</p></b>
+                        <div class="selected-image-container" >
+                            <p *ngIf="generatedImagePreviews.length === 0">No images generated.</p>
+                            <div
+                                cdkDropList
+                                #generated="cdkDropList"
+                                [cdkDropListData]="generatedImagePreviews"
+                                [cdkDropListConnectedTo]="[final]"
+                                (cdkDropListDropped)="drop($event)"
+                                cdkDropListOrientation="horizontal"
+                                style="display: flex; min-height: 100px;">
+                                <div *ngFor="let image of generatedImagePreviews" class="selected-image-wrapper" cdkDrag>
+                                    <img  class="uploaded-and-selected-image" src="{{image}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+                
+                <br>
+                <mat-divider></mat-divider>
+                <br>
+                <div style=" width: calc(100% - 1rem); ">
+                    <h2>Final Order of Images</h2>
+                    <p>Please reorder using drag and drop before next step.</p>
+                    <p style="color: red;" *ngIf="imagePreviews.length >= 10">Maximum 10 images allowed!!</p>
+                    <div class="selected-image-container">
+                        <p *ngIf="imagePreviews.length === 0">No images selected or uploaded</p>
+                        <div 
+                            style="display: flex; min-height: 100px;" 
+                            cdkDropList
+                            #final="cdkDropList"
+                            [cdkDropListData]="imagePreviews"
+                            [cdkDropListConnectedTo]="[uploaded, generated]"
+                            (cdkDropListDropped)="drop($event)"
+                            cdkDropListOrientation="horizontal">
+                            <div *ngFor="let image of imagePreviews" cdkDrag class="selected-image-wrapper">
+                                <img class="uploaded-and-selected-image" src="{{image}}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button style="margin-top: 1rem;" mat-raised-button color="primary" matStepperPrevious>Previous</button>
+            <button style="margin-top: 1rem; margin-left: 1rem;" mat-raised-button color="primary" matStepperNext>Next</button>
+        </mat-step>
+
+        <mat-step  label="Add Audio" [completed]="imagePreviews.length > 0">
+
+            <p>
+                Upload Voice Over or Generate a voice over for your text.
+            </p>
+
+            <mat-tab-group style=" background-color:aliceblue; padding: 1rem; width: calc(100% - 2rem);">
+
+                <mat-tab label="Upload Voice Over">
+                    <br>
+                    <button onclick="document.getElementById('uploadAudio').click()" mat-raised-button color="primary" extended>
+                        <mat-icon>upload</mat-icon>
+                        Upload Audio
+                    </button>
+                    <br><br>
+                    <p>Uploaded Audio</p>
+                    <input id="uploadAudio" accept="audio/*" style="display: none;" type="file" (change)="onAudioUpload($event)" />
+                    <audio class="final-audio-player" [src]="uploadedAudioFileSrc" controls></audio>
+                </mat-tab>
+
+                <mat-tab label="Generate Voice Over" >
+                    <br>
+                    <div class="generate-voice-over">
+                        <div class="normal-voice-over">
+                            <h2>Free version sample</h2>
+                            <mat-form-field>
+                                <mat-label>Language</mat-label>
+                                <mat-select (selectionChange)="onNormalVoiceSampleChange($event)">
+                                    <mat-option *ngFor="let language of normalVoiceSampleAvailableLanguages" [value]="language.value">
+                                      {{language.displayText}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <br>
+                            <audio class="sample-audio-player" src="{{ currentNormalVoiceSample.audioLink }}" controls></audio>
+                            <br><br>
+                            <button mat-raised-button color="primary" extended>
+                                <mat-icon>volume_up</mat-icon>
+                                Generate Free Audio
+                            </button>
+                        </div>
+                        <div class="pro-voice-over">
+                            <h2>Paid version sample</h2>
+                            <mat-form-field>
+                                <mat-label>Language</mat-label>
+                                <mat-select (selectionChange)="onPaidVoiceSampleChange($event)">
+                                    <mat-option *ngFor="let language of paidVoiceSampleAvailableLanguages" [value]="language.value">
+                                      {{language.displayText}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <br>
+                            <audio class="sample-audio-player" src="{{ currentPaidVoiceSample.audioLink }}" controls></audio>
+                            <br><br>
+                            <button mat-raised-button color="primary" extended>
+                                <mat-icon>volume_up</mat-icon>
+                                Generate Premium Audio ( Paid )
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <br><mat-divider></mat-divider><br>
+                    <div class="audio-loading">
+                        <b><p>Generating...</p></b>
+                        <b><p>Generated Audio</p></b>
+                        <audio class="final-audio-player" src="" controls></audio>
+                    </div>
+                </mat-tab>
+
+            </mat-tab-group>
+
+            <button style="margin-top: 1rem;" mat-raised-button color="primary" matStepperPrevious>Previous</button>
+            <button style="margin-top: 1rem; margin-left: 1rem;" mat-raised-button color="primary" matStepperNext>Next</button>
+        </mat-step>
+
+
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          <p>You are now done.</p>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="articleToVideoStepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+</div>

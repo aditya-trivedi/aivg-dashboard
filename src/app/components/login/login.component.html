@@ -1,0 +1,38 @@
+<div class="signin-page-container">
+    <form class="signin-form" (ngSubmit)="onSignUpSubmit()"  [formGroup]="signUpForm" *ngIf="!showLoginForm">
+        <h2>Sign in to use more tools and manage your videos</h2>
+        <br>
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+            <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password">
+            <mat-icon matSuffix>key</mat-icon>
+        </mat-form-field>
+        <p style="color: red;">{{ signUpError }}</p>
+        <button [disabled]="!signUpButtonText.includes('Sign ')" style="margin-top: 1rem;" type="submit" mat-raised-button color="primary">{{ signUpButtonText }}</button>
+        <br><br>
+        <p>Already have an account ? <button mat-raised-button (click)="showLoginForm = !showLoginForm">Log in</button></p>
+    </form>
+
+    <form class="signin-form" (ngSubmit)="onLoginSubmit()"  [formGroup]="loginForm" *ngIf="showLoginForm">
+        <h2>Sign in to use more tools and manage your videos</h2>
+        <br>
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+            <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password">
+            <mat-icon matSuffix>key</mat-icon>
+        </mat-form-field>
+        <button style="margin-top: 1rem;" type="submit" mat-raised-button color="primary">Log in</button>
+        <br><br>
+        <p>Don't have an account ? <button mat-raised-button (click)="showLoginForm = !showLoginForm">Sign up</button></p>
+    </form>
+</div>
