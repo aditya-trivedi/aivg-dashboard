@@ -23,12 +23,12 @@ export class AivideoService {
 
 
   generateImageBasedOnText(data : any) {
-    return this.http.post('http://api.theaivideogenerator.com/api/images/generate/', data, this.options);
+    return this.http.post('https://api.theaivideogenerator.com/api/images/generate/', data, this.options);
   }
 
   generateAudioForArticleText(data : any, isPremium : boolean){
     const param = !isPremium ? '?voice_type=polly' : '?voice_type=elevenlabs';
-    return this.http.post('http://api.theaivideogenerator.com/api/audio/generate/' + param, data, this.options);
+    return this.http.post('https://api.theaivideogenerator.com/api/audio/generate/' + param, data, this.options);
   }
 
   uploadFile(formData: any){

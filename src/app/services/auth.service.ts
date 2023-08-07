@@ -13,7 +13,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
  
-  baseUrl = 'http://api.theaivideogenerator.com/rest-auth/'
+  baseUrl = 'https://api.theaivideogenerator.com/rest-auth/'
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -35,7 +35,7 @@ export class AuthService {
 
   checkAuthStatusAndUpdateUser() {
 
-    const url = 'http://api.theaivideogenerator.com/api/user/me/';
+    const url = 'https://api.theaivideogenerator.com/api/user/me/';
     const authToken = this.getAivgToken();
   
     const headers = new HttpHeaders({
