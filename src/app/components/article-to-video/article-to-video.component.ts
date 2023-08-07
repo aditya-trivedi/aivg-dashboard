@@ -308,7 +308,7 @@ export class ArticleToVideoComponent {
       "image_list": this.imagePreviews,
       "voiceover_s3_key": this.finalAudioSrc,
       "add_subtitles": this.setSubtitles,
-      "language": this.articleTextFormGroup.value.articleLanguage,
+      "language": this.articleTextFormGroup.value.articleLanguage?.slice(0,2),
       "is_portrait": false
     }
   }
