@@ -262,7 +262,7 @@ export class ArticleToVideoComponent {
           clearInterval(urlActiveInterval);
           resolve(url);
         }
-      }, 1000);
+      }, 4000);
       setTimeout(() => {
         clearInterval(urlActiveInterval);
         reject('Time limit exceeded');
