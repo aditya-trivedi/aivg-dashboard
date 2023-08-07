@@ -31,11 +31,17 @@ export class MyVideosComponent {
     )
   }
 
-  downloadVideo(videoUrl: any, videoName: any){
-    let a = document.createElement("a");
-    a.href = videoUrl;
-    a.download =  videoName;
-    a.click();
-    a.remove();
+  async downloadVideo(videoUrl: any, videoName: any){
+    const response = await fetch(videoUrl);
+    const blob = await response.blob();
+    const blobUrl = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = videoName; 
+    link.click();
+
+    // Clean up the Blob URL after the download
+    URL.revokeObjectURL(blobUrl);
   }
 }
