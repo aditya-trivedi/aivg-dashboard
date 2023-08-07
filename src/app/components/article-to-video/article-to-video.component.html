@@ -1,18 +1,34 @@
 <div class="article-to-video-page-container">
-    <mat-stepper class="article-to-video-stepper" linear  labelPosition="bottom"  #articleToVideoStepper selectedIndex="2">
+    <mat-stepper class="article-to-video-stepper" linear  labelPosition="bottom"  #articleToVideoStepper selectedIndex="0">
 
         <mat-step label="Add article text" [stepControl]="articleTextFormGroup" >
 
             <form  [formGroup]="articleTextFormGroup">
                 <mat-form-field style="width: 100%; height: 50vh; padding-top: 1rem;">
                     <mat-label>Article</mat-label>
-                    <textarea formControlName="articleText" style="resize: none;" matInput></textarea>
-                    <mat-error *ngIf="!articleTextFormGroup.valid">Text should be between 200 - 1000 characters long</mat-error>
+                    <textarea formControlName="articleText" style="resize: none; height: 50vh;" matInput></textarea>
+                    <mat-error *ngIf="!articleTextFormGroup.valid">Text should be between 100 - 1000 characters long</mat-error>
                 </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Language of article</mat-label>
+                    <mat-select formControlName="articleLanguage" required>
+                        <mat-option *ngFor="let language of normalVoiceSampleAvailableLanguages" [value]="language.value">
+                          {{language.displayText}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <br>
                 <button style="margin-top: 1rem;" mat-raised-button color="primary" matStepperNext>Next</button>
             </form>
 
+            <!-- your-component.component.html -->
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+        <div *ngIf="imageUrl">
+            <img [src]="imageUrl" alt="Preview" />
+        </div>
         </mat-step>
+
+
 
         <mat-step  label="Add Images" [completed]="imagePreviews.length > 0">
 
@@ -53,11 +69,12 @@
 
                     <mat-tab label="Generate Images - BETA"> 
                         <br>
-                        <button style="margin-bottom: 1vh;" [disabled]="isImageGeneratedOnce" mat-raised-button color="primary" extended (click)="generateImagesRelatedToArticle()">
+                        <button [disabled]="generateImageButtonText.includes('...') || isImageGeneratedOnce" style="margin-bottom: 1vh;" mat-raised-button color="primary" extended (click)="generateImagesRelatedToArticle()">
                             <mat-icon>add_photo_alternate</mat-icon>
-                            Generate Images
+                            {{ generateImageButtonText }}
                         </button>
                         <b><p style="color: red;" *ngIf="isImageGeneratedOnce">Beta Feature : Images can be generated only once</p></b>
+                        <b><p style="color: green;" *ngIf="generateImageButtonText.includes('...')">Generating images, please wait</p></b>
                         <div class="selected-image-container" >
                             <p *ngIf="generatedImagePreviews.length === 0">No images generated.</p>
                             <div
@@ -104,7 +121,9 @@
             <button style="margin-top: 1rem; margin-left: 1rem;" mat-raised-button color="primary" matStepperNext>Next</button>
         </mat-step>
 
-        <mat-step  label="Add Audio" [completed]="imagePreviews.length > 0">
+
+
+        <mat-step  label="Add Audio" [completed]="uploadedAudioFileSrc || generatedAudioLink">
 
             <p>
                 Upload Voice Over or Generate a voice over for your text.
@@ -118,6 +137,10 @@
                         <mat-icon>upload</mat-icon>
                         Upload Audio
                     </button>
+                    <button *ngIf="uploadedAudioFileSrc" (click)="removeUploadedAudio()" mat-raised-button color="primary" extended style="margin-left: 1rem;">
+                        <mat-icon>delete</mat-icon>
+                        Remove Audio
+                    </button>
                     <br><br>
                     <p>Uploaded Audio</p>
                     <input id="uploadAudio" accept="audio/*" style="display: none;" type="file" (change)="onAudioUpload($event)" />
@@ -126,10 +149,11 @@
 
                 <mat-tab label="Generate Voice Over" >
                     <br>
+                    <p>This will generate a voice over using the text you have given in first step</p>
                     <div class="generate-voice-over">
                         <div class="normal-voice-over">
-                            <h2>Free version sample</h2>
-                            <mat-form-field>
+                            <h2>Free version </h2>
+                            <!-- <mat-form-field>
                                 <mat-label>Language</mat-label>
                                 <mat-select (selectionChange)="onNormalVoiceSampleChange($event)">
                                     <mat-option *ngFor="let language of normalVoiceSampleAvailableLanguages" [value]="language.value">
@@ -139,15 +163,23 @@
                             </mat-form-field>
                             <br>
                             <audio class="sample-audio-player" src="{{ currentNormalVoiceSample.audioLink }}" controls></audio>
-                            <br><br>
-                            <button mat-raised-button color="primary" extended>
+                            <br><br> -->
+                            <button (click)="generateAudio(false)" mat-raised-button color="primary" extended>
                                 <mat-icon>volume_up</mat-icon>
                                 Generate Free Audio
                             </button>
                         </div>
                         <div class="pro-voice-over">
-                            <h2>Paid version sample</h2>
+                            <h2>Paid version </h2>
                             <mat-form-field>
+                                <mat-label>Voice</mat-label>
+                                <mat-select [(ngModel)]="paidAudioVoiceIsFemale" (selectionChange)="toggleFemaleMaleVoice($event)">
+                                    <mat-option [value]="true" default>Female</mat-option>
+                                    <mat-option [value]="false" >Male</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <br>
+                            <!-- <mat-form-field>
                                 <mat-label>Language</mat-label>
                                 <mat-select (selectionChange)="onPaidVoiceSampleChange($event)">
                                     <mat-option *ngFor="let language of paidVoiceSampleAvailableLanguages" [value]="language.value">
@@ -157,8 +189,8 @@
                             </mat-form-field>
                             <br>
                             <audio class="sample-audio-player" src="{{ currentPaidVoiceSample.audioLink }}" controls></audio>
-                            <br><br>
-                            <button mat-raised-button color="primary" extended>
+                            <br><br> -->
+                            <button (click)="generateAudio(true)" mat-raised-button color="primary" extended>
                                 <mat-icon>volume_up</mat-icon>
                                 Generate Premium Audio ( Paid )
                             </button>
@@ -167,9 +199,12 @@
                     
                     <br><mat-divider></mat-divider><br>
                     <div class="audio-loading">
-                        <b><p>Generating...</p></b>
-                        <b><p>Generated Audio</p></b>
-                        <audio class="final-audio-player" src="" controls></audio>
+                        <b><p style="color : #b7b706;">{{ generateAudioStatus }}</p></b>
+                        <b><p style="color : red;">{{ generateAudioError }}</p></b>
+                        <div *ngIf="generatedAudioLink">
+                            <b><p style="color : green;" >Generated Audio</p></b>
+                            <audio class="final-audio-player" src="{{ generatedAudioLink }}" controls></audio>
+                        </div>
                     </div>
                 </mat-tab>
 
@@ -179,14 +214,69 @@
             <button style="margin-top: 1rem; margin-left: 1rem;" mat-raised-button color="primary" matStepperNext>Next</button>
         </mat-step>
 
+        <mat-step label="Size and Subtitles">
+            <p>Select aspect ratio of your video</p>
+            <mat-form-field>
+                <mat-label>Video Aspect Ratio</mat-label>
+                <mat-select [(ngModel)]="selectedAspectRatio" (selectionChange)="setAspectRatio($event)">
+                    <mat-option *ngFor="let ratio of videoAspectRatioArray" [value]="ratio.value">
+                      {{ratio.displayText}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br> <br>
+            <p>Do you want to add sub titles to your video?</p>
+            <mat-slide-toggle (change)="onSubtitlesToggleChange($event)"> Subtitles </mat-slide-toggle>
+            <br><br>
+            <button style="margin-top: 1rem;" mat-raised-button color="primary" matStepperPrevious>Previous</button>
+            <button style="margin-top: 1rem; margin-left: 1rem;" mat-raised-button color="primary" matStepperNext>Next</button>
+        </mat-step>
 
-        <mat-step>
-          <ng-template matStepLabel>Done</ng-template>
-          <p>You are now done.</p>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="articleToVideoStepper.reset()">Reset</button>
-          </div>
+        <mat-step label="Preview">
+            <h2>Video Settings Preview</h2>
+            <div>
+                <p> {{ this.articleTextFormGroup.value.articleText }}</p>
+                <div class="selected-image-container">
+                    <div 
+                        style="display: flex; min-height: 100px;" >
+                        <div *ngFor="let image of imagePreviews" class="selected-image-wrapper">
+                            <img class="uploaded-and-selected-image" src="{{image}}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <div *ngIf="uploadedAudioFileSrc && generatedAudioLink">
+                        <b><p>Select Audio</p></b>
+                        <mat-radio-group aria-label="Select an option" (change)="onAudioSelect($event)">
+                            <mat-radio-button value="{{ uploadedAudioFileSrc }}">
+                                <div>
+                                    <audio src="{{ uploadedAudioFileSrc }}" controls></audio>
+                                </div>
+                            </mat-radio-button>
+                            <mat-radio-button value="{{ generatedAudioLink }}">
+                                <div>
+                                    <audio src="{{ generatedAudioLink }}" controls></audio>
+                                </div>
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div *ngIf="!uploadedAudioFileSrc && generatedAudioLink">
+                        <p>Audio</p>
+                        <audio src="{{ generatedAudioLink }}" controls></audio>
+                    </div>
+                    <div *ngIf="uploadedAudioFileSrc && !generatedAudioLink">
+                        <p>Audio</p>
+                        <audio src="{{ uploadedAudioFileSrc }}" controls></audio>
+                    </div>
+                </div>
+                <p>Aspect Ratio : {{ aspectRatioMap[selectedAspectRatio] }}</p>
+                <p>Add Subtitles : {{ setSubtitles ? 'Yes' : 'No' }}</p>
+            </div>
+            <div>
+                <button style="margin-top: 1rem;" mat-raised-button color="primary" matStepperPrevious>Previous</button>
+                <button style="margin-top: 1rem; margin-left: 1rem;" mat-raised-button color="primary" (click)="generateVideo()">GENERATE VIDEO</button>
+            </div>
         </mat-step>
       </mat-stepper>
 </div>

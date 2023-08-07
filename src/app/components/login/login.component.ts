@@ -10,18 +10,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  constructor(	private authService: AuthService,
-				private _snackBar: MatSnackBar,
-				private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private _snackBar: MatSnackBar,
+    private router: Router
+  ) {}
 
   showLoginForm = false;
   signUpError = '';
-  signUpButtonText = 'Sign Up'
+  signUpButtonText = 'Sign Up';
+  loginError = '';
+  loginButtonText = 'Login';
 
-
-  ngOnInit(): void{
-	if(this.authService.userSubject.getValue())
-		this.router.navigate(['/article-to-video'])
+  ngOnInit(): void {
+    if (this.authService.userSubject.getValue())
+      this.router.navigate(['/article-to-video']);
   }
 
   signUpForm = new FormGroup({
@@ -32,29 +35,42 @@ export class LoginComponent {
     ]),
   });
 
-
-
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
 
-
   onLoginSubmit() {
-    let loginData = {
-      email: this.loginForm.value.email,
+    this.loginButtonText = 'Logging in...';
+    this.loginError = '';
+    let loginData: any = {
+      username: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
 
-    this.authService.login(loginData).subscribe((response) => {
-      console.log(response);
-    });
+    this.authService.login(loginData).subscribe(
+      (response) => {
+        this.authService.userSubject.next({
+          email: loginData.username,
+          privateKey: response.key,
+        });
+        localStorage.setItem('aivg_token', response.key);
+        loginData = {};
+        this._snackBar.open('Sign in successful', 'Close', {
+          duration: 2000,
+        });
+        this.router.navigate(['/article-to-video']);
+      },
+      (error) => {
+        console.log(error)
+        this.loginButtonText = 'Login'
+        this.loginError = 'Something went wrong'
+      }
+    );
   }
 
-
-
   onSignUpSubmit() {
-	this.signUpButtonText = 'Signing Up...'
+    this.signUpButtonText = 'Signing Up...';
     this.signUpError = '';
     let signUpData: any = {
       email: this.signUpForm.value.email,
@@ -65,22 +81,20 @@ export class LoginComponent {
 
     this.authService.signUp(signUpData).subscribe(
       (response) => {
-        this.authService.userSubject.next(
-			{
-				email : signUpData.email,
-				privateKey : response.key
-			}
-		)
-		localStorage.setItem('aivg_token',response.key);
+        this.authService.userSubject.next({
+          email: signUpData.email,
+          privateKey: response.key,
+        });
+        localStorage.setItem('aivg_token', response.key);
         signUpData = {};
-		this._snackBar.open('Sign up successful', 'Close',{
-			duration : 2000
-		});
-		this.router.navigate(['/article-to-video'])
+        this._snackBar.open('Sign up successful', 'Close', {
+          duration: 2000,
+        });
+        this.router.navigate(['/article-to-video']);
       },
       (error) => {
-		this.signUpButtonText = 'Sign Up'
-        let err = error.error
+        this.signUpButtonText = 'Sign Up';
+        let err = error.error;
         if (err.email) {
           this.signUpError = err.email[0];
         } else if (err.password1) {

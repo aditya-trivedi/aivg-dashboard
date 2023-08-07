@@ -49,4 +49,18 @@ export class AuthService {
 
     return this.http.get(url, options);
   }
+
+  getUserData(contentType : any){
+    const authToken = this.getAivgToken();
+  
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `token ${authToken}`
+    });
+
+    const options = { 
+      headers
+    };
+    return this.http.get('https://api.theaivideogenerator.com/api/media/?type=' + contentType, options)
+  }
 }

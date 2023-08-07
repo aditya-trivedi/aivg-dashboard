@@ -18,10 +18,10 @@ export class AppComponent {
   ngOnInit(){
 
     if(this.authService.getAivgToken()){
-      console.log('token exists')
+      let privateKey = this.authService.getAivgToken()
       this.authService.checkAuthStatusAndUpdateUser().subscribe(
-        response => {
-          console.log(response);
+        ( response : any ) => {
+          this.authService.userSubject.next({ email : response.user.email, privateKey : privateKey! })
         },
         error =>{
           console.log(error)
@@ -30,6 +30,12 @@ export class AppComponent {
     } else {
       this.authService.userSubject.next(undefined);
     }
+  }
+
+  signOutUser(){
+    localStorage.removeItem('aivg_token');
+    this.authService.userSubject.next(undefined)
+    this.router.navigate(['/login'])
   }
 
 }

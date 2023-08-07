@@ -1,0 +1,30 @@
+.video-list-container{
+    width: 99%;
+}
+
+.video-list-item{
+    width: 100%;
+    margin: 0.4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    background-color: #ddf1ff;
+    border-radius: 0.2rem;
+}
+
+.video-list-item-preview{
+    padding: 0.3rem;
+    align-self: center;
+}
+
+.video-list-item-text {
+    padding: 0.3rem;
+    flex-grow: 1;
+}
+
+.video-list-item-buttons{
+    padding: 0.3rem;
+    align-self: center;
+    width: 8rem;
+}

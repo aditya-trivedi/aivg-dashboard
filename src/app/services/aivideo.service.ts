@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -7,10 +8,36 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AivideoService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
+
+  authToken = this.authService.getAivgToken();
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `token ${this.authToken}`
+  });
+
+  options = { 
+    headers : this.headers
+  };
+
 
 
   generateImageBasedOnText(data : any) {
-    return this.http.get('http://api.theaivideogenerator.com/api/images/generate/', data);
+    return this.http.post('http://api.theaivideogenerator.com/api/images/generate/', data, this.options);
   }
+
+  generateAudioForArticleText(data : any, isPremium : boolean){
+    const param = !isPremium ? '?voice_type=polly' : '?voice_type=elevenlabs';
+    return this.http.post('http://api.theaivideogenerator.com/api/audio/generate/' + param, data, this.options);
+  }
+
+  uploadFile(formData: any){
+    return this.http.post('https://api.theaivideogenerator.com/api/media/',formData,this.options).toPromise();
+  }
+
+  generateVideo(data: any){
+    return this.http.post('https://api.theaivideogenerator.com/api/video/generate/', data, this.options);
+  }
+
+
 }

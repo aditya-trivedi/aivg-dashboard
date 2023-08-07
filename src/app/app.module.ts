@@ -19,16 +19,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatSelectModule} from '@angular/material/select'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatDialogModule } from '@angular/material/dialog'
+import { MatRadioModule } from '@angular/material/radio'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatCardModule } from '@angular/material/card'
+
 import { LoginComponent } from './components/login/login.component';
 import { ArticleToVideoComponent } from './components/article-to-video/article-to-video.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MyVideosComponent } from './my-videos/my-videos.component'
  
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ArticleToVideoComponent
+    ArticleToVideoComponent,
+    MyVideosComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +57,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     HttpClientModule,
     DragDropModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatProgressSpinnerModule,
+    MatCardModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

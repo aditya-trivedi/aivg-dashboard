@@ -31,7 +31,8 @@
             <input type="password" matInput formControlName="password">
             <mat-icon matSuffix>key</mat-icon>
         </mat-form-field>
-        <button style="margin-top: 1rem;" type="submit" mat-raised-button color="primary">Log in</button>
+        <p style="color: red;">{{ loginError }}</p>
+        <button [disabled]="loginButtonText.includes('...')" style="margin-top: 1rem;" type="submit" mat-raised-button color="primary">{{ loginButtonText }}</button>
         <br><br>
         <p>Don't have an account ? <button mat-raised-button (click)="showLoginForm = !showLoginForm">Sign up</button></p>
     </form>

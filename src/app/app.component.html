@@ -15,6 +15,11 @@
         <div matListItemTitle><b>{{ authService.userSubject.getValue()?.email }}</b></div>
         <div matListItemLine>Your account</div>
       </mat-list-item>
+      <mat-list-item (click)="signOutUser()" *ngIf="authService.userSubject.getValue()" class="mat-list-item-center-text-with-icon">
+        <mat-icon matListItemIcon>exit_to_app</mat-icon>
+        <div matListItemTitle>Sign Out</div>
+        <div matListItemLine>Sign out of this session</div>
+      </mat-list-item>
 
       <mat-divider></mat-divider>
 
@@ -27,7 +32,7 @@
       <mat-divider></mat-divider>
 
       <div mat-subheader>Dashboard</div>
-      <mat-list-item >
+      <mat-list-item routerLink="/my-videos"  >
         <mat-icon matListItemIcon>folder</mat-icon>
         <span>My Video</span>
       </mat-list-item>
