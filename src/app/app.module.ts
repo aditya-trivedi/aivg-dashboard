@@ -28,6 +28,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ArticleToVideoComponent } from './components/article-to-video/article-to-video.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyVideosComponent } from './my-videos/my-videos.component'
+import { MatProgressBarModule } from '@angular/material/progress-bar';
  
 
 @NgModule({
@@ -61,7 +62,8 @@ import { MyVideosComponent } from './my-videos/my-videos.component'
     MatDialogModule,
     MatRadioModule,
     MatProgressSpinnerModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressBarModule,
     
   ],
   providers: [],

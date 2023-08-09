@@ -14,7 +14,7 @@ import {
 import {
   MAT_DIALOG_DATA,
   MatDialog,
-  MatDialogRef,
+  MatDialogRef
 } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -35,6 +35,7 @@ export class ArticleToVideoComponent {
   }
 
   imageUrl: any; // Variable to store the image URL for preview
+  videoName: string = '';
 
   onFileSelected(event: any) {
     const fileInput: HTMLInputElement = event.target;
@@ -75,7 +76,7 @@ export class ArticleToVideoComponent {
       '',
       [
         Validators.required,
-        Validators.maxLength(1000),
+        Validators.maxLength(2000),
         Validators.minLength(100),
       ],
     ],
@@ -140,8 +141,8 @@ export class ArticleToVideoComponent {
     let data = this.articleTextFormGroup.value.articleText;
     this.Aivideoservice.generateImageBasedOnText({ story: data }).subscribe(
       (response: any) => {
-        this.generateImageButtonText = 'Generate Text';
-        this.isImageGeneratedOnce = true;
+        this.generateImageButtonText = 'Re-Generate Images';
+        this.isImageGeneratedOnce = false;
         let images = response.data;
         for (const key in images) {
           if (images.hasOwnProperty(key)) {
@@ -150,6 +151,10 @@ export class ArticleToVideoComponent {
               this.generatedImagePreviews.concat(value);
           }
         }
+      },
+      (error: any) => {
+        console.error('Error generating images:', error);
+        this.generateImageButtonText = 'Regenerate image';
       }
     );
   }
@@ -304,12 +309,47 @@ export class ArticleToVideoComponent {
   }
 
   structureGenerateVideoData() {
+    let height = 480;
+    let width = 640;
+    switch (this.selectedAspectRatio) {
+      case 'one_one':
+        width = 480;
+        height = 480;
+        break;
+        
+      case 'three_four':
+        width = 360;
+        height = 480;
+        break;
+    
+      case 'four_three':
+        width = 480;
+        height = 360;
+        break;
+    
+      case 'sixteen_nine':
+        width = 360;
+        height = 640;
+        break;
+    
+      case 'nine_sixteen':
+        width = 360;
+        height = 640;
+        break;
+    
+      default:
+        break;
+    }
+    
+
     return {
       "image_list": this.imagePreviews,
       "voiceover_s3_key": this.finalAudioSrc,
       "add_subtitles": this.setSubtitles,
       "language": this.articleTextFormGroup.value.articleLanguage?.slice(0,2),
-      "is_portrait": false
+      "name": this.videoName,
+      "height": height,
+      "width": width
     }
   }
 
