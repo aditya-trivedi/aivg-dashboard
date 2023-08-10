@@ -38,6 +38,8 @@
                         </button>
                         <b><p style="color: red;" *ngIf="isImageGeneratedOnce">Beta Feature : Images can be generated only once</p></b>
                         <b><p style="color: green;" *ngIf="generateImageButtonText.includes('...')">Generating images, please wait</p></b>
+                        <b><p style="color: black;" >Note: Our AI technology reads your story and extracts suitable images from Google Images that are relevant to your article.</p></b>
+                        <p style="color: black;" >Feel free to regenerate or upload your own images, if you don't like it.</p>
                         <mat-progress-bar mode="indeterminate" color="primary" *ngIf="generateImageButtonText.includes('...')"></mat-progress-bar>
                         <div class="selected-image-container" >
                             <p *ngIf="generatedImagePreviews.length === 0">No images generated.</p>
@@ -50,7 +52,10 @@
                                 cdkDropListOrientation="horizontal"
                                 style="display: flex; min-height: 100px;">
                                 <div *ngFor="let image of generatedImagePreviews" class="selected-image-wrapper" cdkDrag>
-                                    <img  class="uploaded-and-selected-image" src="{{image}}" alt="">
+                                    <img  class="uploaded-and-selected-image" src="{{image}}" alt=""
+                                    [matTooltip]="image"
+                                    matTooltipPosition="above"
+                                    matTooltipClass="custom-tooltip">
                                 </div>
                             </div>
                         </div>

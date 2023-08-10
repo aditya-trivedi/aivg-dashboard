@@ -23,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { MatRadioModule } from '@angular/material/radio'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatCardModule } from '@angular/material/card'
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { LoginComponent } from './components/login/login.component';
 import { ArticleToVideoComponent } from './components/article-to-video/article-to-video.component';
@@ -67,7 +68,7 @@ import { DatePipe } from '@angular/common';
     MatProgressSpinnerModule,
     MatCardModule,
     MatProgressBarModule,
-    
+    MatTooltipModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -61,6 +61,6 @@ export class AuthService {
     const options = { 
       headers
     };
-    return this.http.get('https://api.theaivideogenerator.com/api/media/?type=' + contentType, options)
+    return this.http.get('https://api.theaivideogenerator.com/api/media/?&page_size=100&ordering=-updated&type=' + contentType, options)
   }
 }
