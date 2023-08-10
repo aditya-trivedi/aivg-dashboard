@@ -14,7 +14,9 @@
                         <div class="video-name">{{ content.name }}</div>
                         <div class="video-date">{{ content.created | date:'dd MMM' }}</div>
                         <div class="video-list-item-buttons">
-                        <button mat-raised-button color="primary" (click)="downloadVideo(content.s3_key, content.name)">Download</button>
+                        <button mat-raised-button color="primary" (click)="downloadVideo(content.s3_key, content.name)">Download
+                            <mat-icon>cloud_download</mat-icon>
+                        </button>
                     </div>
                     </div>
                     

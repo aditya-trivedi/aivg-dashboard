@@ -1,7 +1,47 @@
-.main-page-container{
-    height: 100vh;
-}
+/* app.component.css */
 
-.main-side-nav {
-    width: 300px;
-}
+/* Default styling */
+.main-page-container {
+    height: 100vh;
+  }
+  
+  .main-side-nav {
+    width: 300px; /* Set your desired width */
+  }
+  
+  /* Media query for smaller screens */
+  @media screen and (max-width: 600px) {
+    .main-side-nav {
+      width: 80px; /* Adjust the width for smaller screens */
+    }
+  
+    .main-side-nav mat-list-item .mat-list-item-center-text-with-icon {
+      display: none; /* Hide the text and show only icons on small screens */
+    }
+  
+    .main-side-nav mat-list-item span {
+      display: none; /* Hide the menu item text on small screens */
+    }
+  
+    .main-side-nav mat-toolbar button {
+      margin-left: 0.5rem; /* Add spacing between menu icon and toolbar title */
+    }
+  
+    .main-side-nav mat-list-item mat-icon {
+      margin-right: 0; /* Remove icon margin on small screens for compactness */
+    }
+  }
+  
+
+  .mat-toolbar button.mat-fab {
+    margin-right: 10px; /* Adjust the desired spacing */
+  }
+  
+  /* Apply styles to the toolbar title */
+  .toolbar-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    margin-left: 20px;
+  }
+  

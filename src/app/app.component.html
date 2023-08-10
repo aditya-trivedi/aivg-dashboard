@@ -1,6 +1,6 @@
 <mat-sidenav-container class="main-page-container" >
 
-  <mat-sidenav class="main-side-nav" mode="side" opened>
+  <mat-sidenav #sidenav class="main-side-nav" mode="side" [opened]="isSidenavOpen" [mode]="sidenavMode">
 
     <mat-list>
 
@@ -47,7 +47,10 @@
 
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <span>The AI Video Generator</span>
+      <button mat-fab color="primary" (click)="toggleSidenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="toolbar-title">The AI Video Generator</span>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

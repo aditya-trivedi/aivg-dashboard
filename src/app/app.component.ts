@@ -14,6 +14,8 @@ export class AppComponent {
   title = 'video-generator';
 
   sideNavToolsIconList = sideNavToolsIconList;
+  isSidenavOpen = true;
+  sidenavMode: 'side' | 'over' = 'side';
   
   ngOnInit(){
 
@@ -36,6 +38,11 @@ export class AppComponent {
     localStorage.removeItem('aivg_token');
     this.authService.userSubject.next(undefined)
     this.router.navigate(['/login'])
+  }
+
+  toggleSidenav() {
+    this.isSidenavOpen = !this.isSidenavOpen;
+    this.sidenavMode = this.isSidenavOpen ? 'side' : 'over';
   }
 
 }
