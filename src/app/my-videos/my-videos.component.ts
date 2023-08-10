@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-my-videos',
@@ -9,7 +10,7 @@ import { AuthService } from '../services/auth.service';
 export class MyVideosComponent {
 
 
-  constructor(private authService: AuthService){
+  constructor(private authService: AuthService, private datePipe: DatePipe){
 
   }
 

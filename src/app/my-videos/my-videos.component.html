@@ -1,21 +1,29 @@
-<div style="margin-top: 10rem; width: 100%; text-align: center;" *ngIf="isContentLoading">
+<div style="display: flex; flex-direction: column; margin-top: 10rem; width: 100%; text-align: center; align-items: center; justify-content: center;" *ngIf="isContentLoading">
     <h1>Loading Videos...</h1>
+    <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
 </div>
 <div class="video-list-container">
     <div class="single-video">
         <div *ngFor="let content of allContent">
             <div class="video-list-item" *ngIf="content.status != 'F'">
                 <div class="video-list-item-preview">
-                    <video style="max-height: 8rem; border-radius: 0.2rem;" src="{{ content.s3_key }}" controls></video>
+                    <video src="{{ content.s3_key }}" controls></video>
                 </div>
-                <div class="video-list-item-text">
-                    <p> <b>Name : </b> {{ content.name }}</p>
-                    <p> <b>Created : </b> {{ content.created }}</p>
+                <div class="video-list-item-details">
+                    <div class="video-info">
+                        <div class="video-name">{{ content.name }}</div>
+                        <div class="video-date">{{ content.created | date:'dd MMM' }}</div>
+                        <div class="video-list-item-buttons">
+                        <button mat-raised-button color="primary" (click)="downloadVideo(content.s3_key, content.name)">Download</button>
+                    </div>
+                    </div>
+                    
                 </div>
-                <div class="video-list-item-buttons">
-                    <button mat-raised-button color="primary" (click)="downloadVideo(content.s3_key, content.name)" >Download</button>
-                </div>
+                
             </div>
+            
         </div>
     </div>
 </div>
+
+

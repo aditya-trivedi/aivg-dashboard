@@ -29,6 +29,8 @@ import { ArticleToVideoComponent } from './components/article-to-video/article-t
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyVideosComponent } from './my-videos/my-videos.component'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
  
 
 @NgModule({
@@ -42,6 +44,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    CommonModule,
     MatSlideToggleModule,
     MatGridListModule,
     MatSidenavModule,
@@ -66,7 +69,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatProgressBarModule,
     
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
