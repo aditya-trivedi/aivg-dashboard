@@ -20,6 +20,12 @@ export class AivideoService {
     headers : this.headers
   };
 
+  file_headers = new HttpHeaders({
+    'Authorization': `token ${this.authToken}`
+  });
+  file_options = { 
+    headers : this.file_headers
+  };
 
 
   generateImageBasedOnText(data : any) {
@@ -32,7 +38,7 @@ export class AivideoService {
   }
 
   uploadFile(formData: any){
-    return this.http.post('https://api.theaivideogenerator.com/api/media/',formData,this.options).toPromise();
+    return this.http.post('https://api.theaivideogenerator.com/api/media/',formData,this.file_options).toPromise();
   }
 
   generateVideo(data: any){

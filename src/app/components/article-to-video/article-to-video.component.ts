@@ -49,7 +49,9 @@ export class ArticleToVideoComponent {
         this.imageUrl = e.target.result;
         let blobFile = this.dataURLToBlob(this.imageUrl);
         const formData = new FormData();
-        formData.append('content', blobFile, 'Uploaded Audio');
+        const currentTimestampMillis = new Date().getTime();
+        // TODO: Add proper file name
+        formData.append('content', blobFile, `Uploaded_Audio_${currentTimestampMillis}.mp3`);
         let res : any = await this.Aivideoservice.uploadFile(formData)
         console.log(res)
       };
@@ -373,9 +375,13 @@ export class ArticleToVideoComponent {
     else {
       const blob = this.dataURLToBlob(uploadFileLink);
       const formData = new FormData();
-      formData.append('content', blob, 'Uploaded Audio');
+      const currentTimestampMillis = new Date().getTime();
+      // TODO: Add proper file name
+      formData.append('content', blob, `Uploaded_Audio_${currentTimestampMillis}.mp3`);
       let audioresponse : any = await this.Aivideoservice.uploadFile(formData)
-      this.finalAudioSrc = audioresponse.url;
+      console.log(audioresponse)
+      console.log(audioresponse.s3_url, "s3 url of uploaded audio");
+      this.finalAudioSrc = audioresponse.s3_url;
     }
 
     if (!this.imagePreviews.length) {
@@ -387,9 +393,11 @@ export class ArticleToVideoComponent {
       if (image.includes('data:image')) {
         const blob = this.dataURLToBlob(image);
         const formData = new FormData();
-        formData.append('content', blob, 'Uploaded Image');
+        const currentTimestampMillis = new Date().getTime();
+        // TODO: Add proper file name
+        formData.append('content', blob, `Uploaded_image_${currentTimestampMillis}.jpg`);
         let response : any = await this.Aivideoservice.uploadFile(formData);
-        tempImagePreviews.push(response.url);
+        tempImagePreviews.push(response.s3_url);
       } else {
         tempImagePreviews.push(image);
       }
