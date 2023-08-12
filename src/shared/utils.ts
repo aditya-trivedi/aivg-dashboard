@@ -2,22 +2,34 @@ export const sideNavToolsIconList = [
     {
         icon : 'videocam',
         text : 'Convert Article to Video',
-        router_link : 'article-to-video'
+        router_link : 'article-to-video',
+        isDisabled : false,
+        imagePath :  'assets/testing.png',
+        toolTipText: 'Beta Testing'
     },
     {
         icon : 'short_text',
         text : 'Convert Text to Audio',
-        router_link : 'article-to-video'
+        router_link : 'article-to-video',
+        isDisabled : false,
+        imagePath :  'assets/coming-soon.png',
+        toolTipText: 'Coming soon'
     },
     {
         icon : 'subtitles',
         text : 'Add Subtitles to Video',
-        router_link : 'article-to-video'
+        router_link : 'article-to-video',
+        isDisabled : false,
+        imagePath :  'assets/coming-soon.png',
+        toolTipText: 'Coming soon'
     },
     {
         icon : 'image_search',
         text : 'Generate images for article',
-        router_link : 'article-to-video'
+        router_link : 'article-to-video',
+        isDisabled : false,
+        imagePath :  'assets/coming-soon.png',
+        toolTipText: 'Coming soon'
     },
 
 ]

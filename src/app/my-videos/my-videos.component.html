@@ -13,9 +13,20 @@
                     <div class="video-info">
                         <div class="video-name">{{ content.name }}</div>
                         <div class="video-date">{{ content.created | date:'dd MMM' }}</div>
+                        <div class="video-status"  matTooltip="{{ getTooltipMessage(content.status) }}" style="margin-top: 5px; margin-bottom:5px">
+                            Status: <b>{{ content.status === 'C' ? 'Completed' : (content.status === 'P' ? 'In Progress' : '') }}</b>
+                        </div>
                         <div class="video-list-item-buttons">
-                        <button mat-raised-button color="primary" (click)="downloadVideo(content.s3_key, content.name)">Download
+                        <button mat-raised-button color="primary" (click)="downloadVideo(content.s3_key, content.name)" [disabled]="content.status !== 'C'">Download
                             <mat-icon>cloud_download</mat-icon>
+                        </button>
+                        <button mat-raised-button
+                                color="primary"
+                                (click)="copyToClipboard(content.s3_key)"
+                                style="margin-top: 10px"
+                                matTooltip="Your video will be available on this link after generation.">
+                            Copy Video Link
+                            <mat-icon>content_copy</mat-icon>
                         </button>
                     </div>
                     </div>

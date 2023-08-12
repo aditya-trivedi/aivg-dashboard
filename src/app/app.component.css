@@ -6,7 +6,7 @@
   }
   
   .main-side-nav {
-    width: 300px; /* Set your desired width */
+    width: 350px; /* Set your desired width */
   }
   
   /* Media query for smaller screens */
@@ -43,5 +43,11 @@
     font-weight: bold;
     color: white;
     margin-left: 20px;
+  }
+
+  .icon-image {
+    width: 30px; /* Adjust the width as needed */
+    height: 26px; /* Adjust the height as needed */
+    margin-left: 10px; /* Add spacing between icon and text */
   }
   

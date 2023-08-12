@@ -27,6 +27,7 @@
       <mat-list-item *ngFor="let item of sideNavToolsIconList" routerLink="{{ item.router_link }}" >
         <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
         <span>{{ item.text }}</span>
+        <img *ngIf="item.imagePath" [src]="item.imagePath" alt="{{ item.text }}" class="icon-image" [matTooltip]="item.toolTipText">
       </mat-list-item>
 
       <mat-divider></mat-divider>
