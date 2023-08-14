@@ -9,12 +9,21 @@
 }
 
 .selected-image-container{
-    height: fit-content;
+    height: 200px;
     width: 100%;
     background-color: #b8b8b8;
     padding: 0.5rem;
     overflow: auto;
 }
+
+.final-selected-image-container{
+    height: 100px;
+    width: 100%;
+    background-color: #b8b8b8;
+    padding: 0.5rem;
+    overflow: auto;
+}
+
 
 .add-image-container{
     display: flex;
@@ -22,11 +31,19 @@
 }
 
 .uploaded-and-selected-image{
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 200px;
+    max-height: 180px;
     width: auto;
     height: auto;
 }
+
+.final-uploaded-and-selected-image{
+    max-width: 100px;
+    max-height: 90px;
+    width: auto;
+    height: auto;
+}
+
 
 .generated-image-container{
     background-color: #b8b8b8;

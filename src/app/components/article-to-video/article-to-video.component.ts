@@ -62,6 +62,7 @@ export class ArticleToVideoComponent {
 
 
   isImageGeneratedOnce = false;
+  generateVideoClicked = false;
   normalVoiceSampleAvailableLanguages = normalVoiceSampleAvailableLanguages;
   paidVoiceSampleAvailableLanguages = paidVoiceSampleAvailableLanguages;
   currentNormalVoiceSample = {
@@ -294,6 +295,7 @@ export class ArticleToVideoComponent {
   }
 
   async generateVideo() {
+    this.generateVideoClicked = true;
     this.validateGenerateVideoData(); // Complete this in next iteration
     await this.uploadImagesAndAudios();
     const structureData = this.structureGenerateVideoData()
@@ -301,9 +303,11 @@ export class ArticleToVideoComponent {
     this.Aivideoservice.generateVideo(structureData).subscribe(
       (response: any) => {
         this.router.navigate(['/my-videos']);
+        this.generateVideoClicked = false;
       }, 
       (err) => {
         console.log(err)
+        this.generateVideoClicked = false;
       }
     )
     // clear all variables
@@ -330,8 +334,8 @@ export class ArticleToVideoComponent {
         break;
     
       case 'sixteen_nine':
-        width = 360;
-        height = 640;
+        width = 640;
+        height = 360;
         break;
     
       case 'nine_sixteen':
