@@ -436,9 +436,14 @@ export class ArticleToVideoComponent {
   }
 
   async addImageLink(){
+    let isValid;
     const response: any = await this.Aivideoservice.checkImageUrl(this.uploadImageLink)
-    const contentType = response.headers.get('content-type');
-    const isValid = contentType && contentType.startsWith('image/')
+    if(!response){
+      isValid = response;
+    } else {
+      const contentType = response.headers.get('content-type');
+      isValid = contentType && contentType.startsWith('image/')
+    }
     if(!isValid){
       this._snackBar.open('INVALID URL', 'Close', {
         duration: 2000,

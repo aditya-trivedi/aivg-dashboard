@@ -46,10 +46,14 @@ export class AivideoService {
   }
 
   checkImageUrl(imageUrl: string) {
-    const headers = new HttpHeaders({
-      Accept: 'image/*',
-    });
-    return this.http.get(imageUrl, { headers, observe: 'response', responseType: 'blob' }).toPromise()
+    try {
+      const headers = new HttpHeaders({
+        Accept: 'image/*',
+      });
+      return this.http.get(imageUrl, { headers, observe: 'response', responseType: 'blob' }).toPromise().catch( err => { return false})
+    } catch (error) {
+      return false;
+    }
   }
 
 
