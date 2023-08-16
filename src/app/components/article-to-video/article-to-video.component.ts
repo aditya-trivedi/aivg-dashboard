@@ -1,5 +1,6 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AivideoService } from 'src/app/services/aivideo.service';
 import {
   CdkDragDrop,
@@ -91,11 +92,13 @@ export class ArticleToVideoComponent {
     private _formBuilder: FormBuilder,
     private Aivideoservice: AivideoService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar,
   ) {}
 
   imagePreviews: Array<any> = [];
   uploadedImagePreviews: Array<any> = [];
+  uploadedImageLinkPreviews: Array<any> = [];
   generatedImagePreviews: Array<any> = [];
   selectedImages = [];
   imageStepValidityForm = new FormControl('');
@@ -117,12 +120,13 @@ export class ArticleToVideoComponent {
     nine_sixteen: '9 : 16',
     sixteen_nine: '16 : 9',
   };
+  uploadImageLink = ""
 
   selectImages(event: any): void {
     this.selectedImages = event.target.files;
 
     if (this.selectedImages && this.selectedImages[0]) {
-      if (this.selectedImages.length + this.uploadedImagePreviews.length > 10) {
+      if (this.selectedImages.length + this.uploadedImagePreviews.length + this.uploadImageLink.length > 10) {
         return;
       }
       const numberOfFiles = this.selectedImages.length;
@@ -429,5 +433,23 @@ export class ArticleToVideoComponent {
     }
 
     return new Blob([ia], {type:mimeString});
+  }
+
+  async addImageLink(){
+    const response: any = await this.Aivideoservice.checkImageUrl(this.uploadImageLink)
+    const contentType = response.headers.get('content-type');
+    const isValid = contentType && contentType.startsWith('image/')
+    if(!isValid){
+      this._snackBar.open('INVALID URL', 'Close', {
+        duration: 2000,
+      });
+    } else {
+      this.uploadedImageLinkPreviews.push(this.uploadImageLink);
+      this._snackBar.open('Image added', 'Close', {
+        duration: 2000,
+      });
+      this.uploadImageLink = ""
+    }
+
   }
 }

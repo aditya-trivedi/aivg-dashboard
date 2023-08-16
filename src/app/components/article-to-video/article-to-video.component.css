@@ -64,7 +64,7 @@
 }
 
 .selected-image-wrapper:hover {
-    transform: scale(1.5); /* Increase the scale to make the image larger on hover */
+    transform: scale(1.1); /* Increase the scale to make the image larger on hover */
     z-index: 1;
 }
 

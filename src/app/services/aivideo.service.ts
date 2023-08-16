@@ -45,5 +45,14 @@ export class AivideoService {
     return this.http.post('https://api.theaivideogenerator.com/api/video/generate/', data, this.options);
   }
 
+  checkImageUrl(imageUrl: string) {
+    const headers = new HttpHeaders({
+      Accept: 'image/*',
+    });
+    return this.http.get(imageUrl, { headers, observe: 'response', responseType: 'blob' }).toPromise()
+  }
+
+
+
 
 }
