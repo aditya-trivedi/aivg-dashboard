@@ -1,0 +1,35 @@
+
+<div style="margin: 1rem; max-width: 50vw;">
+    <h1 mat-dialog-title>Premium Audio</h1>
+    <div style="display: flex; align-items: center; margin-top: -1rem; padding-left: 1.5rem;">
+        Powered by
+        <img src="https://maddyness-uk.twic.pics/2023/06/Screenshot-2023-06-19-at-14.07.09.png?twic=v1/resize=630" style="max-height: 1.3rem;">
+    </div>
+    <br>
+    <div mat-dialog-content>
+        <p>
+            This premium feature lets you create voiceover in multiple voices and over multiple accents. This feature currently restricted to certain users.
+        </p>
+        <br>
+        <h2>Listen to some samples generated in premium mode</h2>
+        <p>These audios can be generated for different voices, age groups and accents.</p>
+        <div style="display: flex;">
+            <mat-form-field>
+                <mat-label>Select a language</mat-label>
+                <mat-select (selectionChange)="changeAudioSrc($event)">
+                    <mat-option *ngFor="let audio of data.audios" [value]="audio.value">
+                      {{audio.displayText}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <audio style="margin-left: 2rem;" src="{{ sampleAudioSrc }}" controls></audio>
+        </div>
+        <br>
+
+        <b><p>Click "Confirm" to join the waiting list for this feature. We'll contact you back on your registered email.</p></b>
+    </div>
+    <div mat-dialog-actions>
+    <button mat-raised-button (click)="this.dialogRef.close()" >No Thanks</button>
+    <button mat-raised-button color="primary" style="margin-left: 1rem;" (click)="userConfirmedForPremium()">Confirm</button>
+    </div>
+</div>

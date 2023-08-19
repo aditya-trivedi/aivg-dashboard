@@ -188,14 +188,13 @@
                         </div>
                         <div class="pro-voice-over">
                             <h2>Paid version </h2>
-                            <mat-form-field>
+                            <!-- <mat-form-field>
                                 <mat-label>Voice</mat-label>
                                 <mat-select [(ngModel)]="paidAudioVoiceIsFemale" (selectionChange)="toggleFemaleMaleVoice($event)">
                                     <mat-option [value]="true" default>Female</mat-option>
                                     <mat-option [value]="false" >Male</mat-option>
                                 </mat-select>
-                            </mat-form-field>
-                            <br>
+                            </mat-form-field> -->
                             <!-- <mat-form-field>
                                 <mat-label>Language</mat-label>
                                 <mat-select (selectionChange)="onPaidVoiceSampleChange($event)">
@@ -208,8 +207,8 @@
                             <audio class="sample-audio-player" src="{{ currentPaidVoiceSample.audioLink }}" controls></audio>
                             <br><br> -->
                             <button (click)="generateAudio(true)" mat-raised-button color="primary" extended>
-                                <mat-icon>volume_up</mat-icon>
-                                Generate Premium Audio ( Paid )
+                                Generate Premium Audio 
+                                <mat-icon >monetization_on</mat-icon>
                             </button>
                         </div>
                     </div>

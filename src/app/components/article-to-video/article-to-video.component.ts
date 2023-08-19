@@ -233,37 +233,58 @@ export class ArticleToVideoComponent {
   }
 
   generateAudio(isPremium: boolean) {
-    this.finalAudioSrc = '';
-    this.generateAudioStatus = 'Generating Audio...';
-    this.generatedAudioLink = undefined;
-    const generateAudioData = {
-      story: this.articleTextFormGroup.value.articleText,
-      // story : "A wiki (/ˈwɪki/ (listen) WIK-ee) is an online hypertext publication collaboratively edited and managed by its own audience, using a web browser. A typical wiki contains multiple pages for the subjects or scope of the project, and could be either open to the public or limited to use within an organization for maintaining its internal knowledge base.Wikis are enabled by wiki software, otherwise known as wiki engines. A wiki engine, being a form of a content management system, differs from other web-based systems such as blog software",
-      is_female: this.paidAudioVoiceIsFemale,
-      is_mock: true,
-      language: this.articleTextFormGroup.value.articleLanguage,
-      // language : 'english'
-    };
-
-    this.Aivideoservice.generateAudioForArticleText(
-      generateAudioData,
-      isPremium
-    ).subscribe(
-      (response: any) => {
-        this.urlIsActive(response.url)
-          .then((url: any) => {
-            this.generatedAudioLink = url;
-            this.generateAudioStatus = '';
+    if( isPremium ){
+      
+      // Open dialog with information
+      const premiumAudioDialogRef  =  this.dialog.open(PremiumAudioDialog, {
+        data : {
+          audios : paidVoiceSampleAvailableLanguages
+        }
+      })
+      premiumAudioDialogRef.afterClosed().subscribe( result => {
+        if( result ){
+          // TODO : Make API call for /interested
+          this._snackBar.open("Thank you for registering. We will contact you within 24 hours.", "Close",{
+            duration: 4000,
           })
-          .catch((error: any) => {
-            this.generateAudioError = error;
-            this.generateAudioStatus = '';
-          });
-      },
-      (error) => {
-        this.generateAudioError = 'Something went wrong';
-      }
-    );
+        }
+      })
+  
+    } else {
+
+      this.finalAudioSrc = '';
+      this.generateAudioStatus = 'Generating Audio...';
+      this.generatedAudioLink = undefined;
+      const generateAudioData = {
+        story: this.articleTextFormGroup.value.articleText,
+        // story : "A wiki (/ˈwɪki/ (listen) WIK-ee) is an online hypertext publication collaboratively edited and managed by its own audience, using a web browser. A typical wiki contains multiple pages for the subjects or scope of the project, and could be either open to the public or limited to use within an organization for maintaining its internal knowledge base.Wikis are enabled by wiki software, otherwise known as wiki engines. A wiki engine, being a form of a content management system, differs from other web-based systems such as blog software",
+        is_female: this.paidAudioVoiceIsFemale,
+        is_mock: true,
+        language: this.articleTextFormGroup.value.articleLanguage,
+        // language : 'english'
+      };
+
+      this.Aivideoservice.generateAudioForArticleText(
+        generateAudioData,
+        isPremium
+      ).subscribe(
+        (response: any) => {
+          this.urlIsActive(response.url)
+            .then((url: any) => {
+              this.generatedAudioLink = url;
+              this.generateAudioStatus = '';
+            })
+            .catch((error: any) => {
+              this.generateAudioError = error;
+              this.generateAudioStatus = '';
+            });
+        },
+        (error) => {
+          this.generateAudioError = 'Something went wrong';
+        }
+      );
+
+    }
   }
 
   // This function waits for the S3 URL to become active after the MP3 is uploaded.
@@ -460,4 +481,32 @@ export class ArticleToVideoComponent {
     }
 
   }
+}
+
+
+
+
+@Component({
+  selector: 'premium-audio-dialog',
+  templateUrl: 'premium-audio-dialog/premium-audio-dialog.html',
+})
+export class PremiumAudioDialog {
+  constructor(
+    public dialogRef: MatDialogRef<PremiumAudioDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {}
+
+  allAudios = paidVoiceSampleAvailableLanguages;
+  sampleAudioSrc = ''
+
+  userConfirmedForPremium(){
+    this.dialogRef.close(true)
+  }
+
+  changeAudioSrc(event: any){
+    let selectedAudio = this.allAudios.filter( audio => audio.value == event.value)
+    this.sampleAudioSrc = selectedAudio[0].audioLink
+  }
+
+
 }

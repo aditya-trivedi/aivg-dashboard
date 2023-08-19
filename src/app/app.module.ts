@@ -26,7 +26,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { LoginComponent } from './components/login/login.component';
-import { ArticleToVideoComponent } from './components/article-to-video/article-to-video.component';
+import { ArticleToVideoComponent, PremiumAudioDialog } from './components/article-to-video/article-to-video.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyVideosComponent } from './my-videos/my-videos.component'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -39,7 +39,8 @@ import { DatePipe } from '@angular/common';
     AppComponent,
     LoginComponent,
     ArticleToVideoComponent,
-    MyVideosComponent
+    MyVideosComponent,
+    PremiumAudioDialog
   ],
   imports: [
     BrowserModule,
