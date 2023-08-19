@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { sideNavToolsIconList } from '../shared/utils'
 import { AuthService } from './services/auth.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -35,6 +36,13 @@ export class AppComponent {
     } else {
       this.authService.userSubject.next(undefined);
     }
+
+    this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+          if(this.breakpointObserver.isMatched(Breakpoints.Handset)){
+            this.isSidenavOpen = false
+          }
+      });
   }
 
   signOutUser(){
