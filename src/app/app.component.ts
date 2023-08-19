@@ -14,7 +14,7 @@ export class AppComponent {
   title = 'video-generator';
 
   sideNavToolsIconList = sideNavToolsIconList;
-  isSidenavOpen = true;
+  isSidenavOpen = false;
   sidenavMode: 'side' | 'over' = 'side';
   
   ngOnInit(){
@@ -23,6 +23,7 @@ export class AppComponent {
       let privateKey = this.authService.getAivgToken()
       this.authService.checkAuthStatusAndUpdateUser().subscribe(
         ( response : any ) => {
+          this.isSidenavOpen = true
           this.authService.userSubject.next({ email : response.user.email, privateKey : privateKey! })
         },
         error =>{
