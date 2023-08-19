@@ -1,0 +1,12 @@
+{
+  "web": {
+    "client_id": "14136519203-f3qok573vsc6rkuv6knrqalrt256h13j.apps.googleusercontent.com",
+    "project_id": "ai-vi-app",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "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",
+    "redirect_uris": ["https://theaivideogenerator.com", "http://localhost:4200"],
+    "javascript_origins": ["http://localhost:4200", "https://theaivideogenerator.com"]
+  }
+}

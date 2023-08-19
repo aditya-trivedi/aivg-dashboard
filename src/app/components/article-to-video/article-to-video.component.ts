@@ -37,6 +37,7 @@ export class ArticleToVideoComponent {
 
   imageUrl: any; // Variable to store the image URL for preview
   videoName: string = '';
+  fetchingImages: boolean = false;
 
   onFileSelected(event: any) {
     const fileInput: HTMLInputElement = event.target;
@@ -437,7 +438,9 @@ export class ArticleToVideoComponent {
 
   async addImageLink(){
     let isValid;
+    this.fetchingImages = true;
     const response: any = await this.Aivideoservice.checkImageUrl(this.uploadImageLink)
+    this.fetchingImages = false;
     if(!response){
       isValid = response;
     } else {

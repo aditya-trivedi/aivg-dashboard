@@ -48,15 +48,11 @@ export class AivideoService {
   checkImageUrl(imageUrl: string) {
     try {
       const headers = new HttpHeaders({
-        Accept: 'image/*',
+        'Authorization': `token ${this.authToken}`
       });
-      return this.http.get(imageUrl, { headers, observe: 'response', responseType: 'blob' }).toPromise().catch( err => { return false})
+      return this.http.post('https://api.theaivideogenerator.com/api/image-verify/',{'image_url': imageUrl}, { headers, observe: 'response', responseType: 'blob' }).toPromise().catch( err => { return false});
     } catch (error) {
       return false;
     }
   }
-
-
-
-
 }
