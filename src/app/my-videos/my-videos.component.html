@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 </div>
-                <div style="display: flex; flex-direction: column ; margin-left: auto;">
+                <div class="video-list-item-buttons">
                     <button mat-raised-button color="primary" (click)="downloadVideo(content.s3_key, content.name)" [disabled]="content.status !== 'C'">Download
                         <mat-icon>cloud_download</mat-icon>
                     </button>
