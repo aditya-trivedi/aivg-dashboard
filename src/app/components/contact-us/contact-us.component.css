@@ -21,3 +21,9 @@ form {
     justify-content: center;
     width: 30rem;
 }
+
+@media screen and (max-width: 750px) { 
+    form {
+        width: 20rem;
+    }
+}
