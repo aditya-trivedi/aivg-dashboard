@@ -16,7 +16,7 @@
   /* Media query for smaller screens */
   @media screen and (max-width: 750px) {
     .main-side-nav {
-      width: 80%; /* Adjust the width for smaller screens */
+      width: 100%; /* Adjust the width for smaller screens */
     }
 
     .close-sidebar{
