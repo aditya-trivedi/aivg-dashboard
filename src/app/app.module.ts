@@ -32,6 +32,7 @@ import { MyVideosComponent } from './my-videos/my-videos.component'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
  
 
 @NgModule({
@@ -40,7 +41,8 @@ import { DatePipe } from '@angular/common';
     LoginComponent,
     ArticleToVideoComponent,
     MyVideosComponent,
-    PremiumAudioDialog
+    PremiumAudioDialog,
+    ContactUsComponent
   ],
   imports: [
     BrowserModule,

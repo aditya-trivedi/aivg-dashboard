@@ -1,0 +1,16 @@
+<h1 style="padding: 3rem 15rem 0rem 15rem;">Contact Us</h1>
+<p style="padding: 0rem 15rem; text-align: justify; font-size: 1rem; color: #616161;">We'd love to hear from you! Whether you have questions, feedback, or just want to say hello, feel free to get in touch with us. Our team is here to assist you in any way we can. Please use the form below to provide your name, email address, and message, and we'll get back to you as soon as possible. Your input is valuable to us and helps us improve our services. Thank you for reaching out to us!</p>
+<div class="center-container">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input matInput placeholder="Name" formControlName="name">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput placeholder="Message" formControlName="message"></textarea>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+    </form>
+</div>
