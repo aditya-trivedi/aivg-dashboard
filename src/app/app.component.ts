@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { sideNavToolsIconList } from '../shared/utils'
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,7 +11,8 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
   constructor(  public authService : AuthService,
-                public router : Router  ){}
+                public router : Router,
+                private breakpointObserver: BreakpointObserver  ){}
   title = 'video-generator';
 
   sideNavToolsIconList = sideNavToolsIconList;
@@ -23,7 +25,7 @@ export class AppComponent {
       let privateKey = this.authService.getAivgToken()
       this.authService.checkAuthStatusAndUpdateUser().subscribe(
         ( response : any ) => {
-          this.isSidenavOpen = true
+          this.isSidenavOpen = !this.breakpointObserver.isMatched(Breakpoints.Handset);
           this.authService.userSubject.next({ email : response.user.email, privateKey : privateKey! })
         },
         error =>{
