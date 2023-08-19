@@ -8,29 +8,24 @@
   .main-side-nav {
     width: 350px; /* Set your desired width */
   }
+
+  .close-sidebar{
+    display: none;
+  }
   
   /* Media query for smaller screens */
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 750px) {
     .main-side-nav {
-      width: 80px; /* Adjust the width for smaller screens */
+      width: 80%; /* Adjust the width for smaller screens */
     }
-  
-    .main-side-nav mat-list-item .mat-list-item-center-text-with-icon {
-      display: none; /* Hide the text and show only icons on small screens */
+
+    .close-sidebar{
+      display: flex;
     }
-  
-    .main-side-nav mat-list-item span {
-      display: none; /* Hide the menu item text on small screens */
-    }
-  
-    .main-side-nav mat-toolbar button {
-      margin-left: 0.5rem; /* Add spacing between menu icon and toolbar title */
-    }
-  
-    .main-side-nav mat-list-item mat-icon {
-      margin-right: 0; /* Remove icon margin on small screens for compactness */
-    }
+
   }
+
+
   
 
   .mat-toolbar button.mat-fab {
@@ -51,3 +46,4 @@
     margin-left: 10px; /* Add spacing between icon and text */
   }
   
+

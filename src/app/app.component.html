@@ -3,7 +3,10 @@
   <mat-sidenav #sidenav class="main-side-nav" mode="side" [opened]="isSidenavOpen" [mode]="sidenavMode">
 
     <mat-list>
-
+      <mat-list-item style="background-color: #fad7d7;" (click)="isSidenavOpen = false" class="close-sidebar">
+        <mat-icon matListItemIcon style="color: red; transform: rotate(45deg);">add_circle</mat-icon>
+        <span>Close Sidebar</span>
+      </mat-list-item>
       <div mat-subheader>Account</div>
       <mat-list-item *ngIf="!authService.userSubject.getValue()" routerLink="/login" routerLinkActive="active" class="mat-list-item-center-text-with-icon">
         <mat-icon matListItemIcon>person</mat-icon>
@@ -49,8 +52,6 @@
         <mat-icon matListItemIcon>message</mat-icon>
         <span>Contact us</span>
       </mat-list-item>
-
-
     </mat-list>
 
   </mat-sidenav>
