@@ -5,32 +5,35 @@
 <div class="video-list-container">
     <div class="single-video">
         <div *ngFor="let content of allContent">
-            <div class="video-list-item" *ngIf="content.status != 'F'">
+            <div class="video-list-item">
                 <div class="video-list-item-preview">
                     <video src="{{ content.s3_key }}" controls></video>
                 </div>
                 <div class="video-list-item-details">
                     <div class="video-info">
                         <div class="video-name">{{ content.name }}</div>
-                        <div class="video-date">{{ content.created | date:'dd MMM' }}</div>
-                        <div class="video-status"  matTooltip="{{ getTooltipMessage(content.status) }}" style="margin-top: 5px; margin-bottom:5px">
-                            Status: <b>{{ content.status === 'C' ? 'Completed' : (content.status === 'P' ? 'In Progress' : '') }}</b>
+                        <div class="video-date"> Created on : {{ content.created | date:'dd MMM' }}</div>
+                        <div class="video-status"  matTooltip="{{ getTooltipMessage(content.status) }}">
+                            Status: {{ content.status === 'C' ? 'Completed' : (content.status === 'P' ? 'In Progress' : 'Failed') }}
+
+                            <mat-icon class="video-status-icon" *ngIf="content.status === 'C'" style="color: green;">check_circle</mat-icon>
+                            <mat-icon class="video-status-icon" *ngIf="content.status === 'p'" style="color: #b1ac00;">stop</mat-icon>
+                            <mat-icon class="video-status-icon" *ngIf="content.status === 'F'" style="color: red; transform:rotate(45deg);">add_circle</mat-icon>
                         </div>
-                        <div class="video-list-item-buttons">
-                        <button mat-raised-button color="primary" (click)="downloadVideo(content.s3_key, content.name)" [disabled]="content.status !== 'C'">Download
-                            <mat-icon>cloud_download</mat-icon>
-                        </button>
-                        <button mat-raised-button
-                                color="primary"
-                                (click)="copyToClipboard(content.s3_key)"
-                                style="margin-top: 10px"
-                                matTooltip="Your video will be available on this link after generation.">
-                            Copy Video Link
-                            <mat-icon>content_copy</mat-icon>
-                        </button>
                     </div>
-                    </div>
-                    
+                </div>
+                <div style="display: flex; flex-direction: column ; margin-left: auto;">
+                    <button mat-raised-button color="primary" (click)="downloadVideo(content.s3_key, content.name)" [disabled]="content.status !== 'C'">Download
+                        <mat-icon>cloud_download</mat-icon>
+                    </button>
+                    <button mat-raised-button
+                            color="primary"
+                            (click)="copyToClipboard(content.s3_key)"
+                            style="margin-top: 10px"
+                            matTooltip="Your video will be available on this link after generation.">
+                        Copy Video Link
+                        <mat-icon>content_copy</mat-icon>
+                    </button>
                 </div>
                 
             </div>

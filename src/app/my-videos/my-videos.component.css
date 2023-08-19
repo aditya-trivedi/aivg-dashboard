@@ -48,17 +48,32 @@
 .video-info {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Align content to the left */
+    align-items: flex-start; 
     margin-left: 1rem;
 }
 
 .video-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333;
+    font-size: 1.3rem;
+    color: #666;
 }
 
 .video-date {
+    margin-top: 0.4rem;
     font-size: 0.9rem;
     color: #777;
+}
+
+.video-status{
+    margin-top: 0.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-status-icon{
+    margin-left: 0.3rem;
+    font-size: 1.2rem; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
 }
