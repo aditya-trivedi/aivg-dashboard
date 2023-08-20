@@ -7,7 +7,7 @@
                 <mat-form-field style="width: 100%; height: 50vh; padding-top: 1rem;">
                     <mat-label>Article</mat-label>
                     <textarea formControlName="articleText" style="resize: none; height: 40vh;" matInput></textarea>
-                    <mat-error *ngIf="!articleTextFormGroup.valid">Text should be between 100 - 2000 characters long</mat-error>
+                    <mat-error *ngIf="!articleTextFormGroup.valid">Text should be between 100 - 2000 characters long. (Contact us if you want more)</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Language of article</mat-label>
@@ -101,6 +101,7 @@
                             Add Image
                         </button>
                         <mat-progress-bar mode="indeterminate" color="primary" *ngIf="fetchingImages"></mat-progress-bar>
+                        <p style="color: black;" >You can copy image links from stock image websites like <a href="https://www.pexels.com" target="_blank">pexels.com</a> or <a href="https://www.unsplash.com" target="_blank">unsplash.com</a>. Just search for your image and right click on image, copy the image link and paste here.</p>
 
                         <div style=" width: calc(100% - 1rem); margin-top: 1rem; ">
                             <div class="selected-image-container">
@@ -132,7 +133,7 @@
                 <div style=" width: calc(100% - 1rem); ">
                     <h2>Final Order of Images</h2>
                     <p>Please drag and drop images in the box below to include in your video. You can also reorder the images.</p>
-                    <p style="color: red;" *ngIf="imagePreviews.length >= 10">Maximum 10 images allowed!!</p>
+                    <p style="color: red;" *ngIf="imagePreviews.length >= 10">Maximum 10 images allowed!! (Contact us if you want more)</p>
                     <div class="final-selected-image-container">
                         <p *ngIf="imagePreviews.length === 0">No images selected or uploaded</p>
                         <div 

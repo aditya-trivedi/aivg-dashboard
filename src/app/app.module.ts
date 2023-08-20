@@ -33,6 +33,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
+import { HomeComponentComponent } from './components/home-component/home-component.component';
  
 
 @NgModule({
@@ -42,7 +43,8 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
     ArticleToVideoComponent,
     MyVideosComponent,
     PremiumAudioDialog,
-    ContactUsComponent
+    ContactUsComponent,
+    HomeComponentComponent
   ],
   imports: [
     BrowserModule,
