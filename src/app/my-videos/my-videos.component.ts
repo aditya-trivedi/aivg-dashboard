@@ -30,7 +30,43 @@ export class MyVideosComponent {
         // Show Snackbar
         this.isContentLoading = false;
       }
-    )
+    );
+      // SatisMeter installation below
+      (function () {
+        window.satismeter =
+          window.satismeter ||
+          function () {
+            (window.satismeter.q = window.satismeter.q || []).push(arguments);
+          };
+        var script = document.createElement("script");
+        var parent = document.getElementsByTagName("script")[0].parentNode;
+        script.async = true;
+        script.src = "https://app.satismeter.com/satismeter.js";
+        if (parent) {
+          parent.appendChild(script);
+        }
+      })();
+
+      (function() {
+        window.satismeter = window.satismeter || function() {
+          (window.satismeter.q = window.satismeter.q || []).push(arguments);
+        };
+        var script = document.createElement("script");
+        var parent = document.getElementsByTagName("script")[0].parentNode;
+        script.async = true;
+        script.src = "https://app.satismeter.com/js";
+        if (parent) {
+          parent.appendChild(script);
+        }
+      })();
+  
+      window.satismeter({
+        writeKey: "FF4PinajgyNayApQaOPerPOO0LJyBfWA",
+        userId: this.authService.userSubject.getValue()?.email, // TODO Replace with current user unique ID (required)
+        traits: {
+          email: this.authService.userSubject.getValue()?.email, // TODO Replace with current user email (optional)
+        }
+      });
   }
 
   async downloadVideo(videoUrl: any, videoName: any){
