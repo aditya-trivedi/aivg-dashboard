@@ -2,6 +2,7 @@ import { Component, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AivideoService } from 'src/app/services/aivideo.service';
+import { AuthService } from '../../services/auth.service';
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -95,6 +96,7 @@ export class ArticleToVideoComponent {
     private dialog: MatDialog,
     private router: Router,
     private _snackBar: MatSnackBar,
+    private authService: AuthService
   ) {}
 
   imagePreviews: Array<any> = [];
@@ -146,6 +148,7 @@ export class ArticleToVideoComponent {
 
   generateImagesRelatedToArticle() {
     this.generateImageButtonText = 'Generating...';
+    console.log(this.authService.user['customer_plan']);
     let data = this.articleTextFormGroup.value.articleText;
     this.Aivideoservice.generateImageBasedOnText({ story: data }).subscribe(
       (response: any) => {
@@ -234,21 +237,57 @@ export class ArticleToVideoComponent {
 
   generateAudio(isPremium: boolean) {
     if( isPremium ){
+      if (this.authService.user['customer_plan'] == 'TR'){
       
-      // Open dialog with information
-      const premiumAudioDialogRef  =  this.dialog.open(PremiumAudioDialog, {
-        data : {
-          audios : paidVoiceSampleAvailableLanguages
+        // Open dialog with information
+        const premiumAudioDialogRef  =  this.dialog.open(PremiumAudioDialog, {
+          data : {
+            audios : paidVoiceSampleAvailableLanguages
+          }
+        })
+        premiumAudioDialogRef.afterClosed().subscribe( result => {
+          if( result ){
+            // TODO : Make API call for /interested
+            this._snackBar.open("Thank you for registering. We will contact you within 24 hours.", "Close",{
+              duration: 4000,
+            })
+          }
+        })
+      }
+      else{
+
+        this.finalAudioSrc = '';
+      this.generateAudioStatus = 'Generating Audio...';
+      this.generatedAudioLink = undefined;
+      const generateAudioData = {
+        story: this.articleTextFormGroup.value.articleText,
+        // story : "A wiki (/ˈwɪki/ (listen) WIK-ee) is an online hypertext publication collaboratively edited and managed by its own audience, using a web browser. A typical wiki contains multiple pages for the subjects or scope of the project, and could be either open to the public or limited to use within an organization for maintaining its internal knowledge base.Wikis are enabled by wiki software, otherwise known as wiki engines. A wiki engine, being a form of a content management system, differs from other web-based systems such as blog software",
+        is_female: this.paidAudioVoiceIsFemale,
+        language: this.articleTextFormGroup.value.articleLanguage,
+        // language : 'english'
+      };
+
+      this.Aivideoservice.generateAudioForArticleText(
+        generateAudioData,
+        isPremium
+      ).subscribe(
+        (response: any) => {
+          this.urlIsActive(response.url)
+            .then((url: any) => {
+              this.generatedAudioLink = url;
+              this.generateAudioStatus = '';
+            })
+            .catch((error: any) => {
+              this.generateAudioError = error;
+              this.generateAudioStatus = '';
+            });
+        },
+        (error) => {
+          this.generateAudioError = 'Something went wrong';
         }
-      })
-      premiumAudioDialogRef.afterClosed().subscribe( result => {
-        if( result ){
-          // TODO : Make API call for /interested
-          this._snackBar.open("Thank you for registering. We will contact you within 24 hours.", "Close",{
-            duration: 4000,
-          })
-        }
-      })
+      );
+
+      }
   
     } else {
 
@@ -281,6 +320,7 @@ export class ArticleToVideoComponent {
         },
         (error) => {
           this.generateAudioError = 'Something went wrong';
+          this.generateAudioStatus = 'Please re-try generating audio';
         }
       );
 
@@ -494,12 +534,34 @@ export class PremiumAudioDialog {
   constructor(
     public dialogRef: MatDialogRef<PremiumAudioDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private authService: AuthService,
+    private _snackBar: MatSnackBar
   ) {}
 
   allAudios = paidVoiceSampleAvailableLanguages;
   sampleAudioSrc = ''
 
   userConfirmedForPremium(){
+    let data = {
+      'name': this.authService.user['email'],
+      'email': this.authService.user['email'],
+      'message': 'I want to try premium audio',
+    }
+    console.log(data)
+    this.authService.submitQuery(data).subscribe(
+      response => {
+        // Handle successful response here
+        this._snackBar.open("We will get back to you within 24 hours", "Close", {
+          duration : 4000
+        })
+      },
+      error => {
+        // Handle error here
+        this._snackBar.open("Something went wrong", "Close", {
+          duration : 2000
+        })
+      }
+    );
     this.dialogRef.close(true)
   }
 

@@ -7,7 +7,7 @@
                 <mat-form-field style="width: 100%; height: 50vh; padding-top: 1rem;">
                     <mat-label>Article</mat-label>
                     <textarea formControlName="articleText" style="resize: none; height: 40vh;" matInput></textarea>
-                    <mat-error *ngIf="!articleTextFormGroup.valid">Text should be between 100 - 2000 characters long. (Contact us if you want more)</mat-error>
+                    <mat-error *ngIf="!articleTextFormGroup.valid">Text should be between 100 - 2000 characters long. (<a href="/contact" target="_blank">Contact us</a> if you want more)</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Language of article</mat-label>
@@ -30,7 +30,7 @@
 
                 <mat-tab-group style=" background-color:aliceblue; padding: 1rem; width: calc(100% - 2rem);">
                     
-                    <mat-tab label="Generate Images - BETA"> 
+                    <mat-tab label="Generate Images"> 
                         <br>
                         <button [disabled]="generateImageButtonText.includes('...') || isImageGeneratedOnce" style="margin-bottom: 1vh;" mat-raised-button color="primary" extended (click)="generateImagesRelatedToArticle()">
                             <mat-icon>add_photo_alternate</mat-icon>
@@ -133,7 +133,7 @@
                 <div style=" width: calc(100% - 1rem); ">
                     <h2>Final Order of Images</h2>
                     <p>Please drag and drop images in the box below to include in your video. You can also reorder the images.</p>
-                    <p style="color: red;" *ngIf="imagePreviews.length >= 10">Maximum 10 images allowed!! (Contact us if you want more)</p>
+                    <p style="color: red;" *ngIf="imagePreviews.length >= 10">Maximum 10 images allowed!! (<a href="/contact" target="_blank">Contact us</a> if you want more)</p>
                     <div class="final-selected-image-container">
                         <p *ngIf="imagePreviews.length === 0">No images selected or uploaded</p>
                         <div 

@@ -34,6 +34,7 @@ import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { HomeComponentComponent } from './components/home-component/home-component.component';
+import { FeedbackModalComponent } from './my-videos/FeedbackModal.component';
  
 
 @NgModule({
@@ -44,7 +45,8 @@ import { HomeComponentComponent } from './components/home-component/home-compone
     MyVideosComponent,
     PremiumAudioDialog,
     ContactUsComponent,
-    HomeComponentComponent
+    HomeComponentComponent,
+    FeedbackModalComponent
   ],
   imports: [
     BrowserModule,

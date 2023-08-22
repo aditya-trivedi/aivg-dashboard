@@ -3,6 +3,7 @@
     <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
 </div>
 <div class="video-list-container">
+    
     <div class="single-video">
         <div *ngFor="let content of allContent">
             <div class="video-list-item">
@@ -23,17 +24,25 @@
                     </div>
                 </div>
                 <div class="video-list-item-buttons">
-                    <button mat-raised-button color="primary" (click)="downloadVideo(content.s3_key, content.name)" [disabled]="content.status !== 'C'">Download
+                    <button mat-raised-button color="primary" (click)="downloadVideo(content.s3_key, content.name)" [disabled]="content.status !== 'C'">
                         <mat-icon>cloud_download</mat-icon>
+                        <span *ngIf="!isSmallScreen">Download</span>
                     </button>
                     <button mat-raised-button
                             color="primary"
                             (click)="copyToClipboard(content.s3_key)"
                             style="margin-top: 10px"
                             matTooltip="Your video will be available on this link after generation.">
-                        Copy Video Link
                         <mat-icon>content_copy</mat-icon>
+                        <span *ngIf="!isSmallScreen">Copy Link</span>
                     </button>
+                    <button mat-raised-button color="primary" style="margin-top: 10px"
+                            matTooltip="Your feedback will help us improve our AI system"
+                            (click)="openFeedbackModal(content.id, content.name)">
+                    <mat-icon>feedback</mat-icon>
+                    <span *ngIf="!isSmallScreen">Feedback</span>
+                    </button>
+                    
                 </div>
                 
             </div>

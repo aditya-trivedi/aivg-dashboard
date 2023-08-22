@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -10,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ContactUsComponent {
   contactForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,  private _snackBar: MatSnackBar) {
+  constructor(private formBuilder: FormBuilder,  private _snackBar: MatSnackBar, private authService: AuthService) {
     this.contactForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -22,10 +23,27 @@ export class ContactUsComponent {
     if (this.contactForm.valid) {
       // TODO: Send the form data to the server or perform other actions
       console.log('Form submitted:', this.contactForm.value);
+      let data = {
+        'name': this.contactForm.value['name'],
+        'email': this.contactForm.value['email'],
+        'message': this.contactForm.value['message'],
+      }
+      console.log(data)
+      this.authService.submitQuery(data).subscribe(
+        response => {
+          // Handle successful response here
+          this._snackBar.open("We have received you message. We will get back to you within 24 hours", "Close", {
+            duration : 4000
+          })
+        },
+        error => {
+          // Handle error here
+          this._snackBar.open("You must be logged in to contact support", "Close", {
+            duration : 2000
+          })
+        }
+      );
       this.contactForm.reset()
-      this._snackBar.open("We have received you message. We will get back to you within 24 hours", "Close", {
-        duration : 4000
-      })
     }
   }
 }

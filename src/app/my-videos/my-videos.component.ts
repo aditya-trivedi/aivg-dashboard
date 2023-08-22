@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { FeedbackModalComponent } from './FeedbackModal.component';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-my-videos',
@@ -9,44 +12,45 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./my-videos.component.css']
 })
 export class MyVideosComponent {
+  isSmallScreen = false;
 
 
-  constructor(private authService: AuthService, private datePipe: DatePipe, private snackBar: MatSnackBar){
+  constructor(private authService: AuthService, private datePipe: DatePipe, private snackBar: MatSnackBar, private dialog: MatDialog
+    ,private breakpointObserver: BreakpointObserver){
+      this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall])
+      .subscribe(result => {
+        this.isSmallScreen = result.matches;
+      });
 
   }
 
   isContentLoading = true;
   allContent : any = [];
+  showFeedbackBox: boolean = false;
 
   ngOnInit(){
     this.isContentLoading = true;
     const contentType = "V"
-    this.authService.getUserData(contentType).subscribe(
-      ( res : any ) => {
-        this.allContent = res.results;
-        this.isContentLoading = false;
-      } ,
-      ( err : any) => {
-        // Show Snackbar
-        this.isContentLoading = false;
-      }
-    );
-      // SatisMeter installation below
-      (function () {
-        window.satismeter =
-          window.satismeter ||
-          function () {
-            (window.satismeter.q = window.satismeter.q || []).push(arguments);
-          };
-        var script = document.createElement("script");
-        var parent = document.getElementsByTagName("script")[0].parentNode;
-        script.async = true;
-        script.src = "https://app.satismeter.com/satismeter.js";
-        if (parent) {
-          parent.appendChild(script);
-        }
-      })();
+    this.loadData(contentType)
+  }
 
+  async loadData(contentType: string) {
+    try {
+      const res: any = await this.authService.getUserData(contentType).toPromise();
+      this.allContent = res.results;
+      this.isContentLoading = false;
+      this.updateAuthUserAndShowSatismeter();
+    } catch (err) {
+      // Show Snackbar
+      this.isContentLoading = false;
+    }
+  }
+
+  async updateAuthUserAndShowSatismeter() {
+    try {
+      const response: any = await this.authService.checkAuthStatusAndUpdateUser().toPromise();
+      this.authService.user = response['user'];
+      if (this.allContent.length > 0){
       (function() {
         window.satismeter = window.satismeter || function() {
           (window.satismeter.q = window.satismeter.q || []).push(arguments);
@@ -59,14 +63,17 @@ export class MyVideosComponent {
           parent.appendChild(script);
         }
       })();
-  
       window.satismeter({
         writeKey: "FF4PinajgyNayApQaOPerPOO0LJyBfWA",
-        userId: this.authService.userSubject.getValue()?.email, // TODO Replace with current user unique ID (required)
+        userId: this.authService.user['id'], // TODO Replace with current user unique ID (required)
         traits: {
-          email: this.authService.userSubject.getValue()?.email, // TODO Replace with current user email (optional)
+          email: this.authService.user['email'], // TODO Replace with current user email (optional)
         }
       });
+    }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async downloadVideo(videoUrl: any, videoName: any){
@@ -102,5 +109,26 @@ export class MyVideosComponent {
     } catch (error) {
       console.error('Unable to copy text to clipboard', error);
     }
+  }
+  toggleFeedbackBox() {
+    this.showFeedbackBox = !this.showFeedbackBox;
+  }
+
+  submitFeedback() {
+
+  }
+
+  openFeedbackModal(media_id: any, name: string) {
+    const dialogRef = this.dialog.open(FeedbackModalComponent, {
+      width: '400px',
+      data: {
+        'id': media_id,
+        'name': name
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      // handle the result after the modal is closed, if needed
+    });
   }
 }

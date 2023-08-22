@@ -1,21 +1,19 @@
 <h1 style="padding: 1rem 1rem 0.5rem 1rem; text-align: center;">Contact Us</h1>
-<p style="padding: 0.5rem 1rem; text-align: justify; font-size: 0.9rem; color: #616161; text-align: center;">
-  We'd love to hear from you! Whether you have questions, feedback, or just want to say hello,
-  feel free to get in touch with us. Our team is here to assist you in any way we can. Please use the form below to provide your name, email address, and message,
-  and we'll get back to you as soon as possible. Your input is valuable to us and helps us improve our services.
-  Thank you for reaching out to us!
-</p>
 <div class="center-container">
+    <p style="padding: 0.5rem 1rem; text-align: justify; font-size: 1.0rem; color: #616161; text-align: center; max-width: 600px;">
+        We'd love to hear from you! Whether you have questions, feedback, or just want to say hello,
+        feel free to get in touch with us. Our team is here to assist you in any way we can. Your input is valuable to us and helps us improve our services.
+      </p>
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
         <mat-form-field>
-            <input matInput placeholder="Name" formControlName="name">
+            <input matInput required placeholder="Name" formControlName="name">
         </mat-form-field>
         <mat-form-field>
-            <input matInput placeholder="Email" formControlName="email">
+            <input matInput required placeholder="Email" formControlName="email">
         </mat-form-field>
         <mat-form-field>
-            <textarea matInput placeholder="Message" formControlName="message"></textarea>
+            <textarea matInput required placeholder="Message" formControlName="message"></textarea>
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" style="width: 100%;">Submit</button>
+        <button mat-raised-button color="primary" type="submit" style="width: 100%;" [disabled]="!contactForm.valid">Submit</button>
     </form>
 </div>
