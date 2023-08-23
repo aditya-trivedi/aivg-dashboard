@@ -237,7 +237,7 @@ export class ArticleToVideoComponent {
 
   generateAudio(isPremium: boolean) {
     if( isPremium ){
-      if (this.authService.user['customer_plan'] == 'TR'){
+      if (this.authService.user && this.authService.user['customer_plan'] === 'TR'){
       
         // Open dialog with information
         const premiumAudioDialogRef  =  this.dialog.open(PremiumAudioDialog, {
