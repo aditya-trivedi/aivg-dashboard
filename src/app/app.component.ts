@@ -17,7 +17,7 @@ export class AppComponent {
   title = 'video-generator';
 
   sideNavToolsIconList = sideNavToolsIconList;
-  isSidenavOpen = false;
+  isSidenavOpen = true;
   sidenavMode: 'side' | 'over' = 'side';
   
   ngOnInit(){

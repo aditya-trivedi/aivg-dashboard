@@ -148,7 +148,6 @@ export class ArticleToVideoComponent {
 
   generateImagesRelatedToArticle() {
     this.generateImageButtonText = 'Generating...';
-    console.log(this.authService.user['customer_plan']);
     let data = this.articleTextFormGroup.value.articleText;
     this.Aivideoservice.generateImageBasedOnText({ story: data }).subscribe(
       (response: any) => {
