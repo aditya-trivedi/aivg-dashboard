@@ -11,6 +11,7 @@ const routes: Routes = [
   { path : 'article-to-video' , component : ArticleToVideoComponent},
   { path : 'my-videos', component : MyVideosComponent},
   { path : 'contact', component : ContactUsComponent},
+  { path : 'how-to-use', component : HomeComponentComponent},
   { path : '', component : HomeComponentComponent}
 ];
 

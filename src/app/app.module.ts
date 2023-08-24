@@ -46,7 +46,7 @@ import { FeedbackModalComponent } from './my-videos/FeedbackModal.component';
     PremiumAudioDialog,
     ContactUsComponent,
     HomeComponentComponent,
-    FeedbackModalComponent
+    FeedbackModalComponent,
   ],
   imports: [
     BrowserModule,

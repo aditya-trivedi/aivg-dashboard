@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-home-component',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class HomeComponentComponent {
 
+  showTopTryNow = false;
+
+  constructor(private breakpointObserver : BreakpointObserver){}
+
+  ngOnInit(){
+    this.showTopTryNow = !this.breakpointObserver.isMatched(Breakpoints.Handset);
+  }
 }
