@@ -1,0 +1,15 @@
+.premium-audio-dialog{
+    margin: 1rem; 
+    max-width: 50vw;
+}
+
+
+@media screen and (max-width: 750px) {
+    
+    .premium-audio-dialog{
+        margin: 1rem; 
+        max-width: 80vw;
+    }
+    
+
+}
