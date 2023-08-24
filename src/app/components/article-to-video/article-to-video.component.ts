@@ -40,6 +40,13 @@ export class ArticleToVideoComponent {
   videoName: string = '';
   fetchingImages: boolean = false;
 
+  checkAuthStatus(){
+    if(!this.authService.user){
+      this.dialog.open(LoginDialog)
+    }
+  }
+
+
   onFileSelected(event: any) {
     const fileInput: HTMLInputElement = event.target;
     // @ts-ignore
@@ -96,7 +103,7 @@ export class ArticleToVideoComponent {
     private dialog: MatDialog,
     private router: Router,
     private _snackBar: MatSnackBar,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   imagePreviews: Array<any> = [];
@@ -546,7 +553,6 @@ export class PremiumAudioDialog {
       'email': this.authService.user['email'],
       'message': 'I want to try premium audio',
     }
-    console.log(data)
     this.authService.submitQuery(data).subscribe(
       response => {
         // Handle successful response here
@@ -569,5 +575,17 @@ export class PremiumAudioDialog {
     this.sampleAudioSrc = selectedAudio[0].audioLink
   }
 
+}
 
+
+
+@Component({
+  selector: 'login-dialog',
+  styleUrls: ['login-dialog/login-dialog.css'],
+  templateUrl: 'login-dialog/login-dialog.html',
+})
+export class LoginDialog {
+  constructor(
+    public dialogRef: MatDialogRef<LoginDialog>,
+  ) {}
 }

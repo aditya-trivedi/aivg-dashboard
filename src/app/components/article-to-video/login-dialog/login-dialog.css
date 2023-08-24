@@ -1,0 +1,16 @@
+.login-dialog-container{
+    width: 50vw;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+@media screen and (max-width: 750px) {
+    
+    .login-dialog-container{
+        width: 80vw;
+    }
+
+}
