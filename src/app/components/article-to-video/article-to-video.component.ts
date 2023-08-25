@@ -41,7 +41,7 @@ export class ArticleToVideoComponent {
   fetchingImages: boolean = false;
 
   checkAuthStatus(){
-    if(!this.authService.user){
+    if(!this.authService.userSubject.getValue()){
       this.dialog.open(LoginDialog)
     }
   }
@@ -243,7 +243,7 @@ export class ArticleToVideoComponent {
 
   generateAudio(isPremium: boolean) {
     if( isPremium ){
-      if (this.authService.user && this.authService.user['customer_plan'] === 'TR'){
+      if (!this.authService.userSubject.getValue() && this.authService.user['customer_plan'] === 'TR'){
       
         // Open dialog with information
         const premiumAudioDialogRef  =  this.dialog.open(PremiumAudioDialog, {

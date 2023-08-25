@@ -54,6 +54,7 @@ export class LoginComponent {
           email: loginData.username,
           privateKey: response.key,
         });
+        this.authService.user = response['user']
         localStorage.setItem('aivg_token', response.key);
         loginData = {};
         this._snackBar.open('Sign in successful', 'Close', {
@@ -85,6 +86,7 @@ export class LoginComponent {
           email: signUpData.email,
           privateKey: response.key,
         });
+        this.authService.user = response['user']
         localStorage.setItem('aivg_token', response.key);
         signUpData = {};
         this._snackBar.open('Sign up successful', 'Close', {
