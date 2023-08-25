@@ -272,8 +272,9 @@
             <h2>Video Settings Preview</h2>
             <div>
                 <mat-form-field>
-                    <input matInput placeholder="Name of Video" [(ngModel)]="videoName">
+                    <input matInput placeholder="Name of Video" [(ngModel)]="videoName" required>
                 </mat-form-field>
+                <p style="color: red;" *ngIf="videoNameError.length > 0"> {{ videoNameError }}</p>
                 <p> {{ this.articleTextFormGroup.value.articleText }}</p>
                 <div class="selected-image-container">
                     <div 

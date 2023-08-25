@@ -39,6 +39,7 @@ export class ArticleToVideoComponent {
   imageUrl: any; // Variable to store the image URL for preview
   videoName: string = '';
   fetchingImages: boolean = false;
+  videoNameError: string = "";
 
   checkAuthStatus(){
     if(!this.authService.userSubject.getValue()){
@@ -367,11 +368,14 @@ export class ArticleToVideoComponent {
   }
 
   async generateVideo() {
+    if(!this.videoName.length){
+      this.videoNameError = "Please enter a name"
+      return;
+    }
     this.generateVideoClicked = true;
     this.validateGenerateVideoData(); // Complete this in next iteration
     await this.uploadImagesAndAudios();
     const structureData = this.structureGenerateVideoData()
-    console.log(structureData)
     this.Aivideoservice.generateVideo(structureData).subscribe(
       (response: any) => {
         this.router.navigate(['/my-videos']);
