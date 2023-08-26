@@ -171,17 +171,6 @@
                     <div class="generate-voice-over">
                         <div class="normal-voice-over">
                             <h2>Free version </h2>
-                            <!-- <mat-form-field>
-                                <mat-label>Language</mat-label>
-                                <mat-select (selectionChange)="onNormalVoiceSampleChange($event)">
-                                    <mat-option *ngFor="let language of normalVoiceSampleAvailableLanguages" [value]="language.value">
-                                      {{language.displayText}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <br>
-                            <audio class="sample-audio-player" src="{{ currentNormalVoiceSample.audioLink }}" controls></audio>
-                            <br><br> -->
                             <button (click)="generateAudio(false)" mat-raised-button color="primary" extended>
                                 <mat-icon>volume_up</mat-icon>
                                 Generate Free Audio
@@ -189,24 +178,6 @@
                         </div>
                         <div class="pro-voice-over">
                             <h2>Paid version </h2>
-                            <!-- <mat-form-field>
-                                <mat-label>Voice</mat-label>
-                                <mat-select [(ngModel)]="paidAudioVoiceIsFemale" (selectionChange)="toggleFemaleMaleVoice($event)">
-                                    <mat-option [value]="true" default>Female</mat-option>
-                                    <mat-option [value]="false" >Male</mat-option>
-                                </mat-select>
-                            </mat-form-field> -->
-                            <!-- <mat-form-field>
-                                <mat-label>Language</mat-label>
-                                <mat-select (selectionChange)="onPaidVoiceSampleChange($event)">
-                                    <mat-option *ngFor="let language of paidVoiceSampleAvailableLanguages" [value]="language.value">
-                                      {{language.displayText}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <br>
-                            <audio class="sample-audio-player" src="{{ currentPaidVoiceSample.audioLink }}" controls></audio>
-                            <br><br> -->
                             <button (click)="generateAudio(true)" mat-raised-button color="primary" extended>
                                 Generate Premium Audio 
                                 <mat-icon >monetization_on</mat-icon>

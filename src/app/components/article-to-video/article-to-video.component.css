@@ -127,3 +127,17 @@
     border-radius: 30px;
     padding: 0.2rem;
 }
+
+
+@media screen and (max-width: 750px) {
+
+    .generate-voice-over{
+        flex-direction: column;
+    }
+
+    .normal-voice-over{
+        width: 100%;
+    }
+    
+
+  }
