@@ -8,17 +8,17 @@
         <span>Close Sidebar</span>
       </mat-list-item>
       <div mat-subheader>Account</div>
-      <mat-list-item *ngIf="!authService.userSubject.getValue()" routerLink="/login" routerLinkActive="active" class="mat-list-item-center-text-with-icon">
+      <mat-list-item *ngIf="!authService.userSubject.value" routerLink="/login" routerLinkActive="active" class="mat-list-item-center-text-with-icon">
         <mat-icon matListItemIcon>person</mat-icon>
         <div matListItemTitle>Sign-In</div>
         <div matListItemLine>To keep track of your videos</div>
       </mat-list-item>
-      <mat-list-item *ngIf="authService.userSubject.getValue()" routerLink="/account" routerLinkActive="active" class="mat-list-item-center-text-with-icon">
+      <mat-list-item *ngIf="authService.userSubject.value" routerLink="/account" routerLinkActive="active" class="mat-list-item-center-text-with-icon">
         <mat-icon matListItemIcon>person</mat-icon>
-        <div matListItemTitle><b>{{ authService.userSubject.getValue()?.email }}</b></div>
+        <div matListItemTitle><b>{{ authService.userSubject.value?.email }}</b></div>
         <div matListItemLine>Your account</div>
       </mat-list-item>
-      <mat-list-item (click)="signOutUser()" *ngIf="authService.userSubject.getValue()" class="mat-list-item-center-text-with-icon">
+      <mat-list-item (click)="signOutUser()" *ngIf="authService.userSubject.value" class="mat-list-item-center-text-with-icon">
         <mat-icon matListItemIcon>exit_to_app</mat-icon>
         <div matListItemTitle>Sign Out</div>
         <div matListItemLine>Sign out of this session</div>
@@ -35,12 +35,12 @@
 
       <mat-divider></mat-divider>
 
-      <div *ngIf="authService.userSubject.getValue()" mat-subheader>Dashboard</div>
-      <mat-list-item *ngIf="authService.userSubject.getValue()" routerLink="/my-videos"  >
+      <div *ngIf="authService.userSubject.value" mat-subheader>Dashboard</div>
+      <mat-list-item *ngIf="authService.userSubject.value" routerLink="/my-videos"  >
         <mat-icon matListItemIcon>folder</mat-icon>
         <span>My Video</span>
       </mat-list-item>
-      <mat-list-item *ngIf="authService.userSubject.getValue()" >
+      <mat-list-item *ngIf="authService.userSubject.value" >
         <mat-icon matListItemIcon>folder</mat-icon>
         <span>My Audio</span>
       </mat-list-item>

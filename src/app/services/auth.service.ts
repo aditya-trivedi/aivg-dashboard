@@ -7,9 +7,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
 
-  public user : any = undefined;
-
-  public userSubject = new BehaviorSubject<{ email: string, privateKey: string } | undefined>(undefined);
+  public userSubject = new BehaviorSubject<any>(undefined);
 
   constructor(private http: HttpClient) { }
  

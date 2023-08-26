@@ -1,7 +1,7 @@
 <div class="article-to-video-page-container">
     <mat-stepper class="article-to-video-stepper" linear  labelPosition="bottom"  #articleToVideoStepper selectedIndex="0">
 
-        <mat-step label="Add article text" [completed]="articleTextFormGroup.valid && !(!authService.userSubject.getValue())" >
+        <mat-step label="Add article text" [completed]="articleTextFormGroup.valid && !(!authService.userSubject.value)" >
 
             <form  [formGroup]="articleTextFormGroup">
                 <mat-form-field style="width: 100%; height: 50vh; padding-top: 1rem;">

@@ -42,7 +42,7 @@ export class ArticleToVideoComponent {
   videoNameError: string = "";
 
   checkAuthStatus(){
-    if(!this.authService.userSubject.getValue()){
+    if(!this.authService.userSubject.value){
       this.dialog.open(LoginDialog)
     }
   }
@@ -243,7 +243,7 @@ export class ArticleToVideoComponent {
 
   generateAudio(isPremium: boolean) {
     if( isPremium ){
-      if (this.authService.userSubject.getValue() && this.authService.user['customer_plan'] === 'TR'){
+      if (this.authService.userSubject.value && this.authService.userSubject.value?.customer_plan === 'TR'){
       
         // Open dialog with information
         const premiumAudioDialogRef  =  this.dialog.open(PremiumAudioDialog, {
@@ -547,8 +547,8 @@ export class PremiumAudioDialog {
 
   userConfirmedForPremium(){
     let data = {
-      'name': this.authService.user['email'],
-      'email': this.authService.user['email'],
+      'name': this.authService.userSubject.value.email,
+      'email': this.authService.userSubject.value.email,
       'message': 'I want to try premium audio',
     }
     this.authService.submitQuery(data).subscribe(

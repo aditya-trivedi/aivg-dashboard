@@ -27,8 +27,7 @@ export class AppComponent {
       this.authService.checkAuthStatusAndUpdateUser().subscribe(
         ( response : any ) => {
           this.isSidenavOpen = !this.breakpointObserver.isMatched(Breakpoints.Handset);
-          this.authService.userSubject.next({ email : response.user.email, privateKey : privateKey! })
-          this.authService.user = response['user'];
+          this.authService.userSubject.next(response['user'])
         },
         error =>{
           console.log(error)

@@ -48,8 +48,6 @@ export class MyVideosComponent {
 
   async updateAuthUserAndShowSatismeter() {
     try {
-      const response: any = await this.authService.checkAuthStatusAndUpdateUser().toPromise();
-      this.authService.user = response['user'];
       if (this.allContent.length > 0){
       (function() {
         window.satismeter = window.satismeter || function() {
@@ -65,9 +63,9 @@ export class MyVideosComponent {
       })();
       window.satismeter({
         writeKey: "FF4PinajgyNayApQaOPerPOO0LJyBfWA",
-        userId: this.authService.user['id'], // TODO Replace with current user unique ID (required)
+        userId: this.authService.userSubject.value.id, // TODO Replace with current user unique ID (required)
         traits: {
-          email: this.authService.user['email'], // TODO Replace with current user email (optional)
+          email: this.authService.userSubject.value.email // TODO Replace with current user email (optional)
         }
       });
     }

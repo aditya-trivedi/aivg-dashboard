@@ -23,7 +23,7 @@ export class LoginComponent {
   loginButtonText = 'Login';
 
   ngOnInit(): void {
-    if (this.authService.userSubject.getValue())
+    if (this.authService.userSubject.value)
       this.router.navigate(['/article-to-video']);
   }
 
@@ -50,12 +50,9 @@ export class LoginComponent {
 
     this.authService.login(loginData).subscribe(
       (response) => {
-        this.authService.userSubject.next({
-          email: loginData.username,
-          privateKey: response.key,
-        });
-        this.authService.user = response['user']
+        this.authService.userSubject.next({ email : this.signUpForm.value.email});
         localStorage.setItem('aivg_token', response.key);
+        this.callMeAPI()
         loginData = {};
         this._snackBar.open('Sign in successful', 'Close', {
           duration: 2000,
@@ -82,12 +79,9 @@ export class LoginComponent {
 
     this.authService.signUp(signUpData).subscribe(
       (response) => {
-        this.authService.userSubject.next({
-          email: signUpData.email,
-          privateKey: response.key,
-        });
-        this.authService.user = response['user']
+        this.authService.userSubject.next({ email : this.signUpForm.value.email});
         localStorage.setItem('aivg_token', response.key);
+        this.callMeAPI()
         signUpData = {};
         this._snackBar.open('Sign up successful', 'Close', {
           duration: 2000,
@@ -106,5 +100,15 @@ export class LoginComponent {
         }
       }
     );
+  }
+  callMeAPI() {
+    this.authService.checkAuthStatusAndUpdateUser().subscribe(
+      ( response : any ) => {
+        this.authService.userSubject.next(response['user'])
+      },
+      ( error : any ) =>{
+        console.log(error)
+      }
+    ) 
   }
 }
