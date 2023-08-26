@@ -53,9 +53,6 @@ export class FeedbackModalComponent {
   ) {}
 
   submitFeedback() {
-    console.log(this.data);
-    console.log('Liked Video:', this.likedVideo);
-    console.log('Feedback Text:', this.feedbackText);
     let req_body = {
         'is_happy': JSON.parse(this.likedVideo),
         'feedback': this.feedbackText

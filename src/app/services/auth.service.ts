@@ -66,7 +66,6 @@ export class AuthService {
 
   submitQuery(data: any){
     const authToken = this.getAivgToken();
-    console.log(data, "insie submit query")
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `token ${authToken}`
@@ -75,13 +74,11 @@ export class AuthService {
     const options = { 
       headers
     };
-    console.log(options, "options")
     return this.http.post('https://api.theaivideogenerator.com/api/contact-us/', data, options);
   }
 
   submitFeedback(data: any, media_id: string){
     const authToken = this.getAivgToken();
-    console.log(data, "insie submit query")
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `token ${authToken}`
@@ -90,7 +87,6 @@ export class AuthService {
     const options = { 
       headers
     };
-    console.log(options, "options")
     return this.http.post('https://api.theaivideogenerator.com/api/feedback/'+ media_id + '/', data, options);
   }
 

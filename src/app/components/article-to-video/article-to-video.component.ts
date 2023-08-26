@@ -64,7 +64,6 @@ export class ArticleToVideoComponent {
         // TODO: Add proper file name
         formData.append('content', blobFile, `Uploaded_Audio_${currentTimestampMillis}.mp3`);
         let res : any = await this.Aivideoservice.uploadFile(formData)
-        console.log(res)
       };
       reader.readAsDataURL(file);
     }
@@ -386,8 +385,6 @@ export class ArticleToVideoComponent {
         this.generateVideoClicked = false;
       }
     )
-    // clear all variables
-    console.log('GENERATE VIDEO CALLED');
   }
 
   structureGenerateVideoData() {
@@ -467,7 +464,6 @@ export class ArticleToVideoComponent {
       return;
     }
     for (const image of this.imagePreviews) {
-      console.log(image)
       if (image.includes('data:image')) {
         const blob = this.dataURLToBlob(image);
         const formData = new FormData();
@@ -480,9 +476,7 @@ export class ArticleToVideoComponent {
         tempImagePreviews.push(image);
       }
     };
-    console.log(tempImagePreviews)
     this.imagePreviews = tempImagePreviews;
-    console.log(this.imagePreviews, "this image previews")
   }
 
   validateGenerateVideoData() {}

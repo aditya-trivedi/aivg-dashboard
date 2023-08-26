@@ -18,9 +18,10 @@
                             Status: {{ content.status === 'C' ? 'Completed' : (content.status === 'P' ? 'In Progress' : 'Failed') }}
 
                             <mat-icon class="video-status-icon" *ngIf="content.status === 'C'" style="color: green;">check_circle</mat-icon>
-                            <mat-icon class="video-status-icon" *ngIf="content.status === 'p'" style="color: #b1ac00;">stop</mat-icon>
+                            <mat-icon class="video-status-icon" *ngIf="content.status === 'P'" style="color: #ffd900;">stop</mat-icon>
                             <mat-icon class="video-status-icon" *ngIf="content.status === 'F'" style="color: red; transform:rotate(45deg);">add_circle</mat-icon>
                         </div>
+                        <b><p *ngIf="content.status === 'P'">NOTE : Please reload the page after 1 minute</p></b>
                     </div>
                 </div>
                 <div class="video-list-item-buttons">

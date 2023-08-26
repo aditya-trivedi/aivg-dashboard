@@ -35,12 +35,12 @@
 
       <mat-divider></mat-divider>
 
-      <div mat-subheader>Dashboard</div>
-      <mat-list-item routerLink="/my-videos"  >
+      <div *ngIf="authService.userSubject.getValue()" mat-subheader>Dashboard</div>
+      <mat-list-item *ngIf="authService.userSubject.getValue()" routerLink="/my-videos"  >
         <mat-icon matListItemIcon>folder</mat-icon>
         <span>My Video</span>
       </mat-list-item>
-      <mat-list-item >
+      <mat-list-item *ngIf="authService.userSubject.getValue()" >
         <mat-icon matListItemIcon>folder</mat-icon>
         <span>My Audio</span>
       </mat-list-item>

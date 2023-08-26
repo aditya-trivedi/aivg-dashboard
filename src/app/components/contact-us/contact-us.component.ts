@@ -22,13 +22,11 @@ export class ContactUsComponent {
   onSubmit() {
     if (this.contactForm.valid) {
       // TODO: Send the form data to the server or perform other actions
-      console.log('Form submitted:', this.contactForm.value);
       let data = {
         'name': this.contactForm.value['name'],
         'email': this.contactForm.value['email'],
         'message': this.contactForm.value['message'],
       }
-      console.log(data)
       this.authService.submitQuery(data).subscribe(
         response => {
           // Handle successful response here
